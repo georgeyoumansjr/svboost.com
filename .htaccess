@@ -1,0 +1,6 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/tnhlabsc/svboost.com"
+PassengerBaseURI "/"
+PassengerPython "/home/tnhlabsc/virtualenv/svboost.com/3.9/bin/python"
+PassengerAppLogFile "/home/tnhlabsc/log/svboost.log"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END

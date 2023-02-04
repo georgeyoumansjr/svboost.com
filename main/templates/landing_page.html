@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SmartVidBoost</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/solid.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/SVO_icon2.png') }}" />
+	  <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body class="is-boxed has-animations">
+  <div class="body-wrap">
+    <header class="site-header">
+        <div class="container">
+            <div class="site-header-inner">
+                <div class="brand header-brand full-size-header">
+			              <a href="#">
+				              <img class="logo-landing-page" src="{{ url_for('static', filename='img/SVO_icon2.png') }}" alt="Logo">
+                    </a>
+                </div>
+                <a class="button ml-1" style="background-color: #610207" href="#pricingSection">Pricing</a>
+                <a class="button ml-1" style="background-color: #610207" href="{{ url_for('main.login_page') }}">Log in</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero-inner">
+  					<div class="hero-copy">
+              <h1 class="hero-title mt-0 ml-header">SmartVidBoost</h1>
+                <div class="hero-cta">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="button button-primary" href="{{ url_for('main.login_page') }}">Subscribe now for free</a><a class="button" href="{{ url_for('main.contact_page') }}">Get in touch</a></div>
+				    </div>
+				    <div class="hero-figure anime-element">
+              <iframe width="560" height="315" src="https://www.youtube.com/watch?v=oWj_NAAy4V4&t=20s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="features section">
+        <div class="container">
+	        <div class="feature-inner section-inner has-bottom-divider">
+            <div class="">
+              <p class="section-paragraph mb-0 text-center">The SmartVidBoost is an ABSOLUTELY FREE keyword optimization tool for your YouTube videos which will help you increase the quantity and quality of traffic to your online content so it will be shown as a top result for searches of a certain keyword. See all the features below you can get with the SmartVidBoost.</p>
+            </div>
+            <div class="features-wrap">
+              <div class="feature text-center is-revealing">
+                <div class="feature-inner">
+                  <h4 class="feature-title mt-24">Search Top Keywords Suggestions</h4>
+                  <p class="text-sm mb-0">This feature helps you find the top topics in your niche that are trending and people are excited about.</p>
+                </div>
+              </div>
+              <div class="feature text-center is-revealing">
+                <div class="feature-inner">
+                  <h4 class="feature-title mt-24">Search Top Description Keywords</h4>
+                  <p class="text-sm mb-0">This feature searches for top trending keywords from the description section related to your search terms.</p>
+                </div>
+              </div>
+              <div class="feature text-center is-revealing">
+                <div class="feature-inner">
+                  <h4 class="feature-title mt-24">Search Top Tags</h4>
+                  <p class="text-sm mb-0">This feature searches for top trending tags related to your search terms.</p>
+                </div>
+              </div>
+              <div class="feature text-center is-revealing">
+                <div class="feature-inner">
+                  <h4 class="feature-title mt-24">Description Checker</h4>
+                  <p class="text-sm mb-0">This feature aids in building your YouTube description details. This feature will give out tips you can use to rank better on the YouTube algorithm.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricingSection" class="pricing section">
+        <div class="container-sm">
+          <div class="pricing-inner section-inner">
+            <div class="pricing-header text-center">
+              <h2 class="section-title mt-0">Pricing</h2>
+            </div>
+			      <div class="pricing-tables-wrap">
+              <div class="pricing-table">
+                <div class="pricing-table-inner is-revealing">
+                  <div class="pricing-table-main">
+                    <div class="pricing-table-header pb-24">
+                        <div class="pricing-table-price"><span class="pricing-table-price-currency h2">$</span><span class="pricing-table-price-amount h1">0</span><span class="text-xs">/month</span></div>
+                    </div>
+                    <div class="pricing-table-features-title text-xs pt-24 pb-24">Get 14 days trial, and after:</div>
+                    <ul class="pricing-table-features list-reset text-xs">
+                      <li>
+                        <span> 3 tag searches a day</span>
+                      </li>
+                      <li>
+                        <span>3 description searches a day</span>
+                      </li>
+                      <li>
+                        <span>3 keyword suggestions search a day</span>
+                      </li>
+                      <li>
+                        <span>3 description checker use a day</span>
+                      </li>
+                      <li>
+                        <span>Access to 3 previously saved searches or descriptions built</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="pricing-table-cta mb-8">
+                      <a class="button button-primary button-shadow button-block" href="{{ url_for('main.login_page') }}">Subscribe Now</a>
+                  </div>
+                </div>
+              </div>
+              <div class="pricing-table">
+                <div class="pricing-table-inner is-revealing">
+                  <div class="pricing-table-main">
+                    <div class="pricing-table-header pb-24">
+                        <div class="pricing-table-price"><span class="pricing-table-price-currency h2">$</span><span class="pricing-table-price-amount h1">5</span><span class="text-xs">/month</span></div>
+                    </div>
+                    <div class="pricing-table-features-title text-xs pt-24 pb-24">You will get FULL ACCESS on</div>
+                    <ul class="pricing-table-features list-reset text-xs">
+                      <li>
+                        <span>Tag Search</span>
+                      </li>
+                      <li>
+                        <span>Description Search</span>
+                      </li>
+                      <li>
+                        <span>Keyword Suggestion Search</span>
+                      </li>
+                      <li>
+                        <span>Description Checker</span>
+                      </li>
+                      <li>
+                        <span>All saved searches and descriptions</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="pricing-table-cta mb-8">
+                      <button id="offer1" type="button" class="button button-primary button-shadow button-block" href="#">Subscribe Now</button>
+                  </div>
+                </div>
+              </div>
+              <div class="pricing-table">
+                <div class="pricing-table-inner is-revealing">
+                  <div class="pricing-table-main">
+                    <div class="pricing-table-header pb-24">
+                        <div class="pricing-table-price"><span class="pricing-table-price-currency h2">$</span><span class="pricing-table-price-amount h1">50</span><span class="text-xs">/annual</span></div>
+                    </div>
+                    <div class="pricing-table-features-title text-xs pt-24 pb-24">You will get everything from monthly plan plus</div>
+                    <ul class="pricing-table-features list-reset text-xs">
+                      <li>
+                        <span>$10 discount (from $60 to $50)</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="pricing-table-cta mb-8">
+                      <button type="button" id="offer2" class="button button-primary button-shadow button-block" href="#">Subscribe Now</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+			<section class="cta section">
+				<div class="container">
+					<div class="cta-inner section-inner">
+						<h3 class="section-title mt-0">Still not convinced?</h3>
+						<div class="cta-cta">
+							<a class="button button-primary button-wide-mobile" href="{{ url_for('main.contact_page') }}">Get in touch</a>
+						</div>
+					</div>
+				</div>
+			</section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="site-footer-inner">
+          <div class="brand footer-brand">
+						<a href="#">
+							<img class="logo-landing-page" src="{{ url_for('static', filename='img/SVO_icon2.png') }}" alt="Logo">
+						</a>
+          </div>
+          <ul class="footer-links list-reset">
+            <li>
+              <a href="#">Contact</a>
+            </li>
+            <li>
+              <a href="#">About us</a>
+            </li>
+            <li>
+              <a href="#">FAQ's</a>
+            </li>
+            <li>
+              <a href="#">Support</a>
+            </li>
+          </ul>
+          <ul class="footer-social-links list-reset">
+              <!-- ShareThis BEGIN --><div class="sharethis-inline-follow-buttons"></div><!-- ShareThis END -->
+          </ul>
+          <div class="footer-copyright">&copy; 2019 Solid, all rights reserved</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <span style="color:black;">You need to login or register first in order to subscribe. <a id="goToLogin" style="color:black;" href="{{ url_for('main.login_page', next=request.url) }}">Login now</a>.</span>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/solid.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/payment.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/success.js') }}"></script>
+  <script>
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search)
+      if (params.has('offer'))
+        document.getElementById(params.get('offer').replace("#", "")).click()
+    }
+  </script>
+</body>
+</html>

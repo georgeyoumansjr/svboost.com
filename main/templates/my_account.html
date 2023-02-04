@@ -1,0 +1,58 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container login-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 login-form-2">
+            <h3><u>Account Information</u></h3>
+            <form class="my-information-form" action="{{ url_for('main.update_my_information') }}" method="post">
+                <div class="form-group">
+                    <input  type="text" id="name" class="form-control"  name="name" placeholder="Name" value="{{user.name}}">
+                </div>
+
+                <div class="form-group">
+                    <input  type="text" id="email" class="form-control"  name="email" placeholder="E-mail Address" value="{{user.email}}">
+                </div>
+
+                {% if editpass == 'True' %}
+                    <div class="form-group" >
+                        <input  type="password" id="password" class="form-control"  name="password" placeholder="Current Password" value="">
+                    </div>
+                    <div class="form-group">
+                        <input  type="password" id="newpassword" class="form-control"  name="newpassword" placeholder="New Password">
+                    </div>
+                    <div class="form-group">
+                        <input  type="password" id="repeatpassword" class="form-control"  name="repeatpassword" placeholder="Confirm Password">
+                    </div>
+                    <div class="form-group withbtn">
+                        <button class="saveBtn" type="submit" onclick="return validate()">Save</button>
+                    </div>
+
+                {% else %}
+                    <div class="form-group withbtn">
+                        <button class="saveBtn" type="submit" onclick="">Save</button>
+                    </div>
+                {% endif %}
+
+
+
+                {% if message %}
+                <div class="form-group">
+                    <div class="alert alert-warning" role="alert">{{message}}</div>
+                </div>
+                {% endif %}
+
+                <!--div class="form-group">
+                    <hr id="account-info" class="hr-line">
+                </div>
+                <button id="billing" class="saveBtn">Billing</button-->
+            </form>
+
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

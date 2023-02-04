@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+<!--######################## HEADER #########################-->
+<div>
+    <h4><i class="fa fa-shopping-cart" style="color:white; font-size:20px"></i>Cart</h4>
+    <div class="cartCon">
+        <p>Package 01 <span class="price">$00,00</span></p>
+        <p>Package 01 <span class="price">$00,00</span></p>
+        <p>Package 01 <span class="price">$00,00</span></p>
+        <hr>
+        <p><span class="price"><b>Total: $00,00</b></span></p>
+    </div>
+
+    <br>
+    <div>
+        <button class="btn-cart btnAdd">Check out</button>
+        <button class="btn-cart btnClr">Clean</button>
+    </div>
+    <br>
+    <br>
+    <br>
+    <form id="manage-billing-form">
+        <button>Manage Billing</button>
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='js/success.js') }}"></script>
+{% endblock %}

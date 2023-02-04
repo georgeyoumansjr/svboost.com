@@ -1,0 +1,64 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container login-container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 login-form-2">
+            <h3>Log into SVO</h3>
+            <form action="{{url_for('authentication.own_login')}}" method="post">
+                <div  class="alert alert-secondary text-message" role="alert" id="message" hidden>
+                    <!--FLASH MESSAGES-->
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Your Email *" name="email" value="" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Your Password *" name="password" value="" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btnSubmit" value="Login" /> <span class="orstyle">Or</span> <a href="{{url_for('main.register_page')}}" class="ForgetPwd" value="Login">Register</a>
+                </div>
+                <div class="form-group">
+                    <a href="{{url_for('main.reset_password_page')}}" class="ForgetPwd" value="Login">Forgot your Password?</a>
+                </div>
+
+                <div class="form-group">
+                    <hr id="hr_login">
+                </div>
+
+                <div class="form-group">
+                    <a href="{{url_for('authentication.login')}}" class="google btn-login">
+                        <i class="fa fa-google"></i> Login with Google
+                    </a>
+                </div>
+
+                <!-- <div class="form-group">
+                     <a href="#" class="fb btn" id="fblogin">
+                          <i class="fa fa-facebook"></i> Login with Facebook
+                    </a>
+                </div> -->
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var parameters = window.location.search;
+    var pattern = /message=(.*)/i;
+    var message = parameters.match(pattern);
+    if (message){
+        message = message[1].replaceAll('+', ' ');
+        var m = document.getElementById('message');
+        m.removeAttribute("hidden");
+        m.innerText = message;
+    }
+</script>
+{% endblock %}

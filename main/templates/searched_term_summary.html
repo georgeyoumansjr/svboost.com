@@ -1,0 +1,18 @@
+{% extends "search_page_base.html" %}
+
+{% block content_search_page %}
+    <main class="border1">
+        <h4 style="text-align: center;">Search Summary</h4>
+        <div class="content" style="word-break: break-all; padding: 20px">
+            {% for term in terms_re %}
+                {% if  term.result%}
+                    <strong>Searched term:</strong> {{term.term}} <br>
+                    <strong>Result:</strong> <br>
+                        {{term.result}}
+                    <hr>
+                {% endif %}
+            {% endfor %}
+            <button type="button" class="btn btn-secondary" onclick="history.back()">Back</button>
+        </div>
+    </main>
+{% endblock %}

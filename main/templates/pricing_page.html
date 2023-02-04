@@ -1,0 +1,52 @@
+
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+<!--######################## HEADER #########################-->
+<div>
+    <h4>Offers </h4>
+    <hr>
+
+    <div class="cartCon">
+        <p>Package 01</p>
+        <hr>
+        <p>
+            You can search for the best and most searched tag on youtube and use them to power up your
+            videos.
+        </p>
+        <hr>
+        <p>Price <span class="price">$ 10,00</span></p>
+        <div>
+            <button id="offer1" class="btn-cart btnAdd">Subscribe</button>
+        </div>
+        <br>
+        <br>
+    </div>
+    <br>
+    <br>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span style="color:black;">You need to login first in order to subscribe. <a href="{{ url_for('main.login_page') }}">Login now</a>.</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+p {
+  font-size: 16px;
+}
+</style>
+<!--######################## HEADER #########################-->
+<header class="h-100">
+    <div class="center-vertically-by-padding">
+        <h1 class="text-center">Privacy Policy</h1>
+    </div>
+</header>
+<!--######################## INTRO #########################-->
+<section>
+    <p>
+        SmartVidBoost is a service offered by Smart Solutions Consulting, an
+        American private software company based in the United States.
+    </p>
+    <ol>
+        <li><b>Contact Information</b></li>
+        Smart Solutions Consulting<br>
+        877 Broad St. Newark<br>
+        New Jersey, United States<br>
+        smartvidboost@gmail.com<br>
+        <br>
+        <li><b>Personal data we process</b></li>
+        <p>
+            SmartVidBoost processes your personal data when you sign up for our services.
+            The personal information we process:
+        </p>
+            <ul type="a">
+                <li>First and last name</li>
+                <li>Email address</li>
+                <li>Payment informations</li>
+            </ul>
+        <br>
+        <li><b>Special and / or sensitive personal data we process</b></li>
+            <p>
+                Our website and/or service does not intend to collect data about visitors younger than
+                12 years old, unless they have their parents' or caretakers' approval. However, we cannot
+                check whether a visitor is older than 16 years. If you are convinced we have collected personal
+                data about a minor without approval, please contact us at smartvidboost@gmail.com so we can delete
+                the information.
+            </p>
+        <br>
+        <li><b>Why we are processing personal data</b></li>
+            <p>
+                SmartVidBoost is processing your data with the following goals:
+                <ul>
+                    <li>To offer you the possibility to sign up for an account.</li>
+                    <li>To get access to the services.</li>
+                </ul>
+            </p>
+        <br>
+        <li><b>How long we are keeping personal data</b></li>
+            <p>
+                SmartVidBoost is not retaining your personal data longer than strictly required to offer
+                you the services we need your personal data for. We retain your data for:
+                <ul>
+                    <li>Personal data: until the account has been deleted.</li>
+                </ul>
+            </p>
+        <br>
+        <li><b>Cookies or comparable techniques we use</b></li>
+            <p>
+                SmartVidBoost only uses technical, functional and non-tracking analytical cookies. Cookies
+                are small text files that are stored on your computer, tablet or smartphone when visiting a website
+                for the first time. The cookies we use are required for the website to function properly. We use
+                cookies to optimize your experience, for example remembering your login. You can opt out of cookies
+                by configuring your browser to reject cookies. You can also clear all installed cookies via your browser settings.
+            </p>
+        <br>
+        <li><b>View, modify or delete your data</b></li>
+            <p>
+                You have the right to view, correct or delete your personal data. You can do this via your account page.
+                You also have the right to revoke your permission for processing personal data or to object against processing
+                your personal data by our company. You can also request us to send a copy of your personal data.
+                If you want to use your aforementioned rights, or in case you have questions or suggestions regarding the processing
+                of personal data, please send a request to smartvidboost@gmail.com. SmartVidBoost will respond to your request
+                as soon as possible, within 4 weeks.
+            </p>
+        <br>
+        <li><b>How we protect personal data</b></li>
+            <p>
+                SmartVidBoost takes the protection of your data seriously and takes appropriate measures to prevent abuse, loss,
+                unauthorized access, unwanted disclosure and unauthorized changes. If you have the idea your data is not properly secured
+                or there are indications of abuse, please contact us via smartvidboost@gmail.com.
+            </p>
+    </ol>
+</section>
+
+<div class="copyright text-center">
+    <!-- Privacy Policy -->
+    Copyright &copy; 2021 - All Rights Reserved
+    <br>
+    <a href="{{ url_for('main.terms_of_service') }}">Terms of Service</a> |
+    <a href="{{ url_for('main.privacy_policy') }}">Privacy Policy</a>
+</div>
+
+<script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+<!--<script src="js/scripts.js"></script>-->
+{% endblock %}

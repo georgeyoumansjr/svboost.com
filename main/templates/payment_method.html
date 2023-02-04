@@ -1,0 +1,49 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+{% if current_user.is_authenticated %}
+{% extends "private_access_base.html" %}
+{% else %}
+{% extends "base.html" %}
+{% endif %}
+
+
+{% block content %}
+<div class="container login-container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 login-form-2">
+            <h3>Payment Method</h3>
+            <form>
+                <div class="form-group">
+                    <label style="float:left" class="txt">Name on Card *</label>
+                    <input type="text" class="form-control" placeholder="Nancy Jonas More" name="name" value="" />
+                </div>
+
+                <div class="form-group">
+                    <label style="float:left" class="txt">Card number *</label>
+                    <input type="text" class="form-control" placeholder="1111-2222-3333-4444" name="cardNumber" value="" />
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-7">
+                        <label style="float:left" class="txt">Expire Date *</label>
+                        <input type="text" class="form-control" placeholder="09-2024" name="expDate" value="" />
+                    </div>
+                    <div class="form-group col-5">
+                        <label style="float:left" class="txt">CVV *</label>
+                        <input type="text" class="form-control" placeholder="123" name="cvv" value="" />
+                    </div>
+                </div>
+
+                <div>
+                    <input class="submitBtn" type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

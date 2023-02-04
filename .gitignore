@@ -1,0 +1,13 @@
+.idea
+.env
+*__pycache__
+env/
+*.DS_Store
+env-seana
+sqlite_db
+test.db
+None.db
+seana.db
+credentials.json
+token.json
+seana_test.db

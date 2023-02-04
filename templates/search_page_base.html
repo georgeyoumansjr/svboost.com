@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="search_page_content">
+        <div class="row">
+            <div class="col-xl col-lg col-md">
+                <nav class="nav flex-column side-nav mb-5">
+                    <button class="btn btn-info mb-3 show-modal-button" data-toggle="modal" data-target="#tutorialModal">TUTORIAL</button>
+                    <h5>Search keywords from:</h5>
+                    <a class="btn btn-light" href="{{ url_for('main.search_by_keyword_in_tag') }}">TAGS</a>
+                    <a class="btn btn-light" href="{{ url_for('main.search_by_keyword_in_description') }}">DESCRIPTIONS</a>
+                    <a class="btn btn-light" href="{{ url_for('main.search_by_keyword') }}">SUGGESTIONS</a>
+                    <h5 class="mt-5">Try our Description Checker:</h5>
+                    <a class="btn btn-light" href="{{ url_for('main.description_builder') }}">CHECKER</a>
+                </nav>
+            </div>
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+                {% block content_search_page %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <center>
+            <section class="features section">
+              <div class="container">
+                <div class="features-inner section-inner has-bottom-divider">
+                  <div class="">
+                    <iframe width="640" height="360" src="https://www.youtube.com/embed/MUFdJ6qXnew" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                  <br>
+                  <div class="row">
+                    <div class="col col-6">
+                      <div class="feature-inner">
+                        <br><br>
+                        <h4 class="feature-title mt-24">Search Trending Tags</h4>
+                        <p class="text-sm mb-0">This feature searches for top trending tags related to your search terms.</p>
+                      </div>
+                    </div>
+                    <div class="col col-6">
+                      <div class="feature-inner">
+                        <br><br>
+                        <h4 class="feature-title mt-24">Search Trending Description Keywords</h4>
+                        <p class="text-sm mb-0">This feature searches for top trending keywords from the description section related to your search terms.</p>
+                      </div>
+                    </div>
+                    <div class="col col-6">
+                      <div class="feature-inner">
+                        <br><br>
+                        <h4 class="feature-title mt-24">Search Trending Suggested Keywords</h4>
+                        <p class="text-sm mb-0">This feature helps you find the top topics in your niche that are trending and people are excited about.</p>
+                        <br><br>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="col col-6">
+                      <div class="feature-inner">
+                        <br><br>
+                        <h4 class="feature-title mt-24">Description Checker</h4>
+                        <p class="text-sm mb-0">This feature aids in building your YouTube description details. This feature will give out tips you can use to rank better on the YouTube algorithm.</p>
+                      </div>
+                    </div>
+                    <br><br>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </center>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

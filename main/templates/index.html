@@ -1,0 +1,183 @@
+
+{% extends "search_page_base.html" %}
+
+{% block content_search_page %}
+    <style>
+    .collapsible {
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+    }
+
+    .active, .collapsible:hover {
+    }
+
+    .content {
+      padding: 0 18px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+      text-overflow: ellipsis;
+    }
+
+    .collapsible:after {
+      content: '\1405';
+      color: #862213;
+      font-weight: bold;
+      float: left;
+      margin-left: 5px;
+    }
+
+    .active:after {
+      content: "\1401";
+    }
+    </style>
+
+        <main class="border1">
+          <center>
+            <section class="features section">
+              <div class="container">
+                <div class="features-inner section-inner has-bottom-divider">
+                  <div class="">
+                    <iframe width="640" height="360" src="https://www.youtube.com/embed/MUFdJ6qXnew" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                  <br><br><br>
+                  <div class="row">
+                    <div class="col col-6">
+                      <div class="feature-inner">
+                        <br><br>
+                        <h4 class="feature-title mt-24">Search Trending Tags</h4>
+                        <p class="text-sm mb-0">This feature searches for top trending tags related to your search terms.</p>
+                      </div>
+                    </div>
+                    <div class="col col-6">
+                      <div class="feature-inner">
+                        <br><br>
+                        <h4 class="feature-title mt-24">Search Trending Description Keywords</h4>
+                        <p class="text-sm mb-0">This feature searches for top trending keywords from the description section related to your search terms.</p>
+                      </div>
+                    </div>
+                    <div class="col col-6">
+                      <div class="feature-inner">
+                        <br><br>
+                        <h4 class="feature-title mt-24">Search Trending Suggested Keywords</h4>
+                        <p class="text-sm mb-0">This feature helps you find the top topics in your niche that are trending and people are excited about.</p>
+                        <br><br>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="col col-6">
+                      <div class="feature-inner">
+                        <br><br>
+                        <h4 class="feature-title mt-24">Description Checker</h4>
+                        <p class="text-sm mb-0">This feature aids in building your YouTube description details. This feature will give out tips you can use to rank better on the YouTube algorithm.</p>
+                      </div>
+                    </div>
+                    <br><br>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </center>
+          <br><br>
+          <br><br>
+          <br><br>
+            <h3 style="text-align: center;"><b>SAVED SEARCHES</b></h3>
+            <h5 class="collapsible"><b>&nbsp;TAGS</b></h5>
+                <div class="content">
+                    {% if tag_re %}
+                        {% for tag in tag_re %}
+                            {% if tag == 'Blocked' %}
+                                <p>- Blocked</p>
+                            {% endif %}
+
+                            <a href="{{ url_for('main.search_summary', term=tag.term) }}">{{tag.term}}</a>  <span style="float:right">{{tag.search_date}}</span>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <p>- There's no search yet</p>
+                    {% endif %}
+                </div>
+            <h5 class="collapsible"><b>&nbsp;DESCRIPTIONS</b></h5>
+            <div class="content">
+                {% if des_re %}
+                    {% for des in des_re %}
+                        {% if des == 'Blocked' %}
+                            <p>- Blocked</p>
+                        {% endif %}
+
+                        <a href="{{ url_for('main.search_summary', term=des.term) }}">{{des.term}}</a>  <span style="float:right">{{des.search_date}}</span>
+                        <hr>
+                    {% endfor %}
+                {% else %}
+                    <p>- There's no search yet</p>
+                {% endif %}
+            </div>
+            <h5 class="collapsible"><b>&nbsp;SUGGESTIONS</b></h5>
+                <div class="content">
+                    {% if key_re %}
+                        {% for key in key_re %}
+                            {% if key == 'Blocked' %}
+                                <p>- Blocked</p>
+                            {% endif %}
+
+                            <a href="{{ url_for('main.search_summary', term=key.term) }}">{{key.term}}</a>  <span style="float:right">{{key.search_date}}</span>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <p>- There's no search yet</p>
+                    {% endif %}
+                </div>
+            <h5 class="collapsible"><b>&nbsp;DESCRIPTION CHECKER</b></h5>
+                <div class="content">
+                    {% if buil_re %}
+                        {% for buil in buil_re %}
+                            {% if buil == 'Blocked' %}
+                                <p>- Blocked</p>
+                            {% endif %}
+                            <a href="{{ url_for('main.search_summary', term=buil.term) }}">{{buil.term}}</a>  <span style="float:right">{{buil.search_date}}</span>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <p>- There's no search yet</p>
+                    {% endif %}
+                </div>
+                <br><br>
+                <br><br>
+        </main>
+
+        <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+              content.style.maxHeight = null;
+            } else {
+              content.style.maxHeight = content.scrollHeight + "px";
+            }
+          });
+        }
+        </script>
+
+        <script id="tourScript">
+            window.addEventListener('load', (event) => {
+                var resourceToGuide = getShowTour('showTutorial')
+
+                resourceToGuide.done(function (response) {
+                    console.log(response);
+                    if ( response.status ) {
+                        tourShowTutorialModal();
+                    }
+                });
+
+            });
+        </script>
+
+{% endblock %}

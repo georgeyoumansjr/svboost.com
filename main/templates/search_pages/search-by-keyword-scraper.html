@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main class="border1">
+    <h1>Search by Keyword (webscraper)</h1>
+
+    <section class="search">
+        <form>
+            <div class="form-group">
+                <label for="keyword">Keyword:</label>
+                <input type="text" class="form-control" id="keyword" name="keyword">
+                <input type="hidden" id="ft" value="scraper"/>
+            </div>
+            <button type="button" class="btn btn-default">Search</button>
+        </form>
+    </section>
+    <div id="spinner" style="display:none">
+          <center>
+          <img id="img-spinner" src="{{ url_for('static', filename='img/spinner.gif')}}" alt="Loading..."/><br>
+          <i id="wait_time">Please note that this may take a while as the algorithm runs through all keywords across YouTube.</i><br><br><br>
+          </center>
+        </div>
+    <section hidden class="result">
+
+    </section>
+</main>
+{% endblock %}

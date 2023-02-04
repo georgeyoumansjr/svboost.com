@@ -1,0 +1,8 @@
+
+{% if current_user.is_authenticated and current_user.email and current_user.email == config.USER_ADMIN %}
+    {% extends 'admin/master.html' %}
+    {% block body %}
+    {% endblock %}
+{% else %}
+    <h3>You must be logged or have permissions in order to access this content.</h3><br> <a href="/login-page">Login</a>
+{% endif %}
