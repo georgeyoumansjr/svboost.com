@@ -1,0 +1,33 @@
+---
+deployment:
+ tasks:
+ - export DEPLOYPATH=/home/tnhlabsc/svboost.com/
+ - /bin/cp .well-known $DEPLOYPATH
+ - /bin/cp authentication $DEPLOYPATH
+ - /bin/cp config $DEPLOYPATH
+ - /bin/cp db $DEPLOYPATH
+ - /bin/cp main $DEPLOYPATH
+ - /bin/cp migrations $DEPLOYPATH
+ - /bin/cp payments $DEPLOYPATH
+ - /bin/cp report $DEPLOYPATH
+ - /bin/cp static $DEPLOYPATH
+ - /bin/cp templates $DEPLOYPATH
+ - /bin/cp tmp $DEPLOYPATH
+ - /bin/cp Wiki $DEPLOYPATH
+ - /bin/cp .db $DEPLOYPATH
+ - /bin/cp .env-example $DEPLOYPATH
+ - /bin/cp .httpaccess $DEPLOYPATH
+ - /bin/cp app.py $DEPLOYPATH
+ - /bin/cp deploy.sh $DEPLOYPATH
+ - /bin/cp favicon.ico $DEPLOYPATH
+ - /bin/cp get-pip.py $DEPLOYPATH
+ - /bin/cp install.sh $DEPLOYPATH
+ - /bin/cp passenger_wsgi.py $DEPLOYPATH
+ - /bin/cp Pipfile $DEPLOYPATH
+ - /bin/cp Pipfile.lock $DEPLOYPATH
+ - /bin/cp Procfile $DEPLOYPATH
+ - /bin/cp requirements.txt $DEPLOYPATH
+ - /bin/cp robots.txt $DEPLOYPATH
+ - /bin/cp server.sh $DEPLOYPATH
+ - /bin/cp stopwords.txt $DEPLOYPATH
+ - /bin/cp tmp-main.zip $DEPLOYPATH
