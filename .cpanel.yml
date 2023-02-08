@@ -2,18 +2,18 @@
 deployment:
  tasks:
  - export DEPLOYPATH=/home/tnhlabsc/svboost.com/
- - /bin/cp .well-known $DEPLOYPATH
- - /bin/cp authentication $DEPLOYPATH
- - /bin/cp config $DEPLOYPATH
- - /bin/cp db $DEPLOYPATH
- - /bin/cp main $DEPLOYPATH
- - /bin/cp migrations $DEPLOYPATH
- - /bin/cp payments $DEPLOYPATH
- - /bin/cp report $DEPLOYPATH
- - /bin/cp static $DEPLOYPATH
- - /bin/cp templates $DEPLOYPATH
- - /bin/cp tmp $DEPLOYPATH
- - /bin/cp Wiki $DEPLOYPATH
+ - /bin/cp -R .well-known $DEPLOYPATH
+ - /bin/cp -R authentication $DEPLOYPATH
+ - /bin/cp -R config $DEPLOYPATH
+ - /bin/cp -R db $DEPLOYPATH
+ - /bin/cp -R main $DEPLOYPATH
+ - /bin/cp -R migrations $DEPLOYPATH
+ - /bin/cp -R payments $DEPLOYPATH
+ - /bin/cp -R report $DEPLOYPATH
+ - /bin/cp -R static $DEPLOYPATH
+ - /bin/cp -R templates $DEPLOYPATH
+ - /bin/cp -R tmp $DEPLOYPATH
+ - /bin/cp -R Wiki $DEPLOYPATH
  - /bin/cp .db $DEPLOYPATH
  - /bin/cp .env-example $DEPLOYPATH
  - /bin/cp .httpaccess $DEPLOYPATH
