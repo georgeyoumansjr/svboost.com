@@ -39,9 +39,9 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 if ENVIRONMENT == 'prod':
-    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://{}:{}@{}/{}".format(USERNAMEDB, PASSWORDDB, SERVERDB, NAMEDB)
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{}:{}@{}/{}".format(USERNAMEDB, PASSWORDDB, SERVERDB, NAMEDB)
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}/{}.db'.format(ROOT, NAMEDB)
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{}:{}@{}/{}".format('svboost', 'password', 'localhost', 'svboost')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['FLASK_ADMIN_SWATCH'] = 'paper'
