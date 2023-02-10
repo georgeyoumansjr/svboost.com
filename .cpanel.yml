@@ -7,7 +7,7 @@ deployment:
  - /bin/cp -R db $DEPLOYPATH
  - /bin/cp -R main $DEPLOYPATH
  - /bin/cp -R migrations $DEPLOYPATH
- - /bin/cp -R payments $DEPLOYPATH
+ - /bin/cp -R payment $DEPLOYPATH
  - /bin/cp -R report $DEPLOYPATH
  - /bin/cp -R static $DEPLOYPATH
  - /bin/cp -R templates $DEPLOYPATH
