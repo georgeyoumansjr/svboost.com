@@ -2,7 +2,6 @@
 deployment:
  tasks:
  - export DEPLOYPATH=/home/tnhlabsc/svboost.com/
- - /bin/cp -R .well-known $DEPLOYPATH
  - /bin/cp -R authentication $DEPLOYPATH
  - /bin/cp -R config $DEPLOYPATH
  - /bin/cp -R db $DEPLOYPATH
@@ -15,8 +14,6 @@ deployment:
  - /bin/cp -R tmp $DEPLOYPATH
  - /bin/cp -R Wiki $DEPLOYPATH
  - /bin/cp .db $DEPLOYPATH
- - /bin/cp .env-example $DEPLOYPATH
- - /bin/cp .httpaccess $DEPLOYPATH
  - /bin/cp app.py $DEPLOYPATH
  - /bin/cp deploy.sh $DEPLOYPATH
  - /bin/cp favicon.ico $DEPLOYPATH
