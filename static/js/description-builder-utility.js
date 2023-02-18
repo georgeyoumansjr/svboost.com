@@ -28,15 +28,17 @@ function search_for_keyword_description_builder(){
         $("#spinner").hide();
         $(".result").show();
 
-        re = response.slice(0, 6 + 1);
-
+        //re = response.slice(0, 6 + 1);
         var list = [];
-        if (response.length > 10){
-            list = to_list_template_new(re)
-        } else {
-            list = to_list_template_new(re)
-        }
-
+        //console.log(response);
+        try{
+            list = to_list_template_new(response);
+        }catch(error){
+            list = '<div> Your Description: </div>'
+            +'<div id="tocopy" style=" border: 1px solid gray; padding: 5px; background-color: white; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); ">'+response+
+	        '</div> <button class="btnbuild" onclick="copyToClipboard()">Copy</button>';
+            //list = response;
+        };
         $(".result").append(
         '<div>'
         +list

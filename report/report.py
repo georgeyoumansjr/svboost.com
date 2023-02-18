@@ -106,10 +106,21 @@ def get_description_builder_keywords():
     global search_by_keyword_result
 
     if 'keyword' in request.args:
+        import openai
         keyword = str(request.args['keyword'])
-        search_by_keyword_result = report_by_keyword(keyword)
-        bdes = frequency_by_video_description(search_by_keyword_result)
-        json_data = jsonify(bdes)
+
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt="Write a video description about "+keyword,
+            max_tokens=200,
+            temperature=0
+        )
+
+        json_data = response['choices'][0]['text']
+
+        #search_by_keyword_result = report_by_keyword(keyword)
+        #bdes = frequency_by_video_description(search_by_keyword_result)
+        json_data = jsonify(json_data)
 
         return json_data
     else:

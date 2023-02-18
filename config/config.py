@@ -3,7 +3,9 @@ import sys
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-ROOT = '/home/tnhlabsc/svboost.com'
+#ROOT = '/home/tnhlabsc/svboost.com'
+ROOT = '/mnt/c/Users/admin/Documents/Github/svboost.com'
+
 
 os.environ['OPENBLAS_NUM_THREADS'] = '1'
 

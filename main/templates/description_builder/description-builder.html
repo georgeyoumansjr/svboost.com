@@ -17,8 +17,8 @@
 
 {% block content_search_page %}
     <main class="border1">
-        <h1>DESCRIPTION CHECKER</h1>
-        <p>This feature aids in building your YouTube description details. This feature will give out tips you can use to rank better on the YouTube algorithm.</p>
+        <h1>DESCRIPTION WRITER</h1>
+        <p>This feature aids in building your YouTube description details. This feature will give out descriptions you can use to rank better on the YouTube algorithm.</p>
         <div class="row">
             <div class="col col-1"></div>
             <div class="col-10 main-center" >
@@ -28,7 +28,7 @@
                         <div>
                             <input style="width: 100%;" type="text" size="" id="keyword" name="keyword">
                             <button style="width:100px; display:block; margin-left: auto;margin-right: auto;" type="button" class="form-control" value="descbuilder" id="search">
-                              Search
+                              Write
                             </button>
                             <div id="spinner" style="display:none" class="mt-2">
                                   <center>
@@ -51,68 +51,7 @@
             <div class="col col-1">&nbsp;</div>
 
         </div>
-        <div class="row mt-3">
-            <div class="col col-1"></div>
-            <div class="col main-center" hidden id="suggestions">
-              <div class="row mb-4">
-                <div class="col-12">
-                  <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    <h5>TIPS:</h5>
-                    <h6>***Searched keyword(s): each of these keywords should occur 3 times.</h6>
-                    <h6>***Related keywords: each of these keywords should occur at least once.</h6>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <h4 class="text-left">Searched keyword(s)</h4>
-                  <div class="d-flex mb-4">
-                    <i><ul class="list-inline" id="searList">
-
-                    </ul></i>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <h4 class="text-left">Related keywords</h4>
-                  <div class="d-flex mb-4">
-                    <i><ul class="list-inline" id="sugList">
-
-                    </ul></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col col-1"></div>
-        </div>
-        <div class="row">
-          <div class="col col-1"></div>
-          <div class="col main-center" hidden id="progress">
-            <div class="progress">
-              <div id="progresscheker" class="progress-bar bg-danger" role="progressbar"></div>
-            </div>
-          </div>
-          <div class="col col-1"></div>
-        </div>
-        <div class="row">
-            <div class="col col-1"></div>
-            <div class="col-10 main-center">
-                <br><br>
-                <h6>Key in or paste your description here:</h6>
-                <textarea placeholder="Type in an introduction for your description - minimum 50 chars." type="text" id="textarea_descri" name="description_intro" onkeyup="validation_builder()" rows="15"></textarea>
-                <center>
-                <div class="btns" style="text-align:right;">
-                    <button  type="button" class="btn btn-light btn-sty" style="float:left" onclick="copyToClipboard(textarea_descri)">Copy</button>
-                    <button style="width:90px;" type="button" class="btn btn-secondary btn-sty" onclick="step_one()">Save</button>
-                    <div hidden class="alert alert-secondary" role="alert" id="displayMessageDescriptionBuilder"></div>
-                </div>
-                </center>
-            </div>
-            <div class="col col-1"></div>
-          </div>
+       
 
     </main>
 {% endblock %}
