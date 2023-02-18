@@ -113,7 +113,7 @@ def get_description_builder_keywords():
             model="text-davinci-003",
             prompt="Write a video description about "+keyword,
             max_tokens=200,
-            temperature=0
+            temperature=0.5
         )
 
         json_data = response['choices'][0]['text']
