@@ -1,8 +1,9 @@
 function search_for_keyword_description_builder(){
+    /*
 	$("#tipBody").text("This tool helps you to build your YouTube video description. Just key in your topic, " +
 	"hit search and top keyword suggestions will fill up the suggestion box. Optimize these keywords to your linking " +
 	"and the remaining ones will be used to guide you on how to build your video description.")
-
+    */
     var keyword = $("#keyword").val()
     //var checked_language = $("input[type='radio'][name='language']:checked").val();
     var checked_language = "";
@@ -28,22 +29,41 @@ function search_for_keyword_description_builder(){
         $("#spinner").hide();
         $(".result").show();
 
+        const token_amount = document.querySelector('#token_amount');
+        const description_amount = document.querySelector('#description_amount');
+
+        let value = parseInt(token_amount.textContent);
+        let description_value = parseInt(description_amount.textContent);
+
+        value-=5;
+        description_value--;
+
+        token_amount.textContent = value.toString();
+        description_amount.textContent = description_value.toString();
+        
+        
         //re = response.slice(0, 6 + 1);
         var list = [];
         //console.log(response);
         try{
-            list = to_list_template_new(response);
+            //list = to_list_template_new(response);
+            for(i=1;i<4;i++) {
+
+                desc = '<div> Your Description: </div>'
+                +'<div id="tocopy" style=" border: 1px solid gray; padding: 5px; background-color: white; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); ">'+response[i]+
+                '</div> <button class="btnbuild" onclick="copyToClipboard()">Copy</button>';
+                
+                $(".result").append(
+                '<div>'
+                +desc
+                +'</div>'
+                );
+            }
+           //
         }catch(error){
-            list = '<div> Your Description: </div>'
-            +'<div id="tocopy" style=" border: 1px solid gray; padding: 5px; background-color: white; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); ">'+response+
-	        '</div> <button class="btnbuild" onclick="copyToClipboard()">Copy</button>';
             //list = response;
+            console.error(error)
         };
-        $(".result").append(
-        '<div>'
-        +list
-        +'</div>'
-        );
 		renderTag();
     })
 }

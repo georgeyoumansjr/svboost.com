@@ -13,6 +13,7 @@ import uuid
 from db.contact import Contact
 from db.db import db
 from db.user import User
+from db.token_offers import TokenOffers
 import hashlib
 from .email_utility import create_message
 from .email_utility import get_stored_credential
@@ -98,7 +99,8 @@ def index():
             )
 
     if user:
-        return render_template(templates_path+"index.html", username=user.name, tag_re=reverse_filter(tag_re), key_re=reverse_filter(key_re), des_re=reverse_filter(des_re), buil_re=reverse_filter(buil_re), is_home="True")
+        token_amount = User.query.filter_by(id=current_user.id).first().token_amount
+        return render_template(templates_path+"index.html", token_amount=token_amount, username=user.name, tag_re=reverse_filter(tag_re), key_re=reverse_filter(key_re), des_re=reverse_filter(des_re), buil_re=reverse_filter(buil_re), is_home="True")
 
     return ""
 
@@ -121,7 +123,7 @@ def search_summary(term):
             )
 
 
-    return render_template(templates_path+"searched_term_summary.html", username=user.name, terms_re=terms_re)
+    return render_template(templates_path+"searched_term_summary.html", username=user.name, terms_re=terms_re, token_amount=token_amount)
 
 
 @blueprint.route("/user", methods=['GET'])
@@ -157,7 +159,16 @@ def cart_page():
 
 @blueprint.route("/pricing_page", methods=['GET'])
 def pricing_page():
-    return render_template(templates_path+"pricing_page.html")
+    offers = TokenOffers.query.all()
+    context = []
+    for offer in offers:
+        context.append(offer)
+
+
+    return render_template(templates_path+"pricing_page.html", offers=context)
+@blueprint.route("/pricing_page/info", methods=['GET'])
+def info():
+    return render_template(templates_path+'info.html')
 
 
 # --------------------------------------------
@@ -210,7 +221,7 @@ def my_account():
     if current_user.password != 'None':
         return render_template(templates_path+"my_account.html", user=user, editpass='True', message=message)
     else:
-        return render_template(templates_path+"my_account.html", user=user, editpass='False', message=messages)
+        return render_template(templates_path+"my_account.html", user=user, editpass='False', message=message)
 
 @blueprint.route("/update-my-information", methods=['POST'])
 @login_required
@@ -257,10 +268,12 @@ def update_my_information():
         return redirect(url_for("main.my_account", message='problem updating the information', user=user))
 
 
-@blueprint.route("/payment_method", methods=['GET'])
+@blueprint.route("/payment_method/<id>", methods=['GET'])
 @login_required
-def payment_method():
-    return render_template(templates_path+"payment_method.html")
+def payment_method(id):
+    user = User.query.filter_by(id=current_user.id).first()
+    offer = TokenOffers.query.filter_by(id=id).first()
+    return render_template(templates_path+"payment_method.html", user=user, offer=offer)
 
 @blueprint.route("/purchase_details", methods=['GET'])
 def purchase_details():
@@ -317,11 +330,17 @@ def search_by_keyword_scraper():
 # --------------------------------------------
 # ----------------- CHECKER ------------------
 # --------------------------------------------
-
+from flask import flash
 @blueprint.route("/description-checker", methods=['GET'])
 @login_required
 def description_builder():
-    return render_template(templates_path+"/description_builder/description-builder.html")
+    user = User.query.filter_by(id=current_user.id).first()
+    if user.token_amount == None or user.token_amount < 5:
+        flash("You don't have enough tokens.",'error')
+        return redirect('/pricing_page')
+    token_amount = user.token_amount
+    description_amount = int(token_amount/5)
+    return render_template(templates_path+"/description_builder/description-builder.html", token_amount=token_amount, description_amount=description_amount)
 
 @blueprint.route("/save-result", methods=['POST'])
 @login_required

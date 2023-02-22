@@ -4,32 +4,28 @@
 
 
 {% block content %}
-
-<!--######################## HEADER #########################-->
-<div>
-    <h4>Offers </h4>
-    <hr>
-
-    <div class="cartCon">
-        <p>Package 01</p>
-        <hr>
-        <p>
-            You can search for the best and most searched tag on youtube and use them to power up your
-            videos.
-        </p>
-        <hr>
-        <p>Price <span class="price">$ 10,00</span></p>
-        <div>
-            <button id="offer1" class="btn-cart btnAdd">Subscribe</button>
-        </div>
-        <br>
-        <br>
+<center>
+    <div style="background-color: aliceblue;">
+        <h4>To learn more about our pricing and how tokens being used: <a href="pricing_page/info">Click Here!</a></h4>
     </div>
-    <br>
-    <br>
-</div>
+</center>
+<div class="row" id="offers-parent-div">
+    {% for offer in offers %}
+        <div class="col-sm-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                <h5 class="card-title">{{ offer.token_amount }} Tokens</h5>
+                <h6 class="card-subtitle mb-2 text-muted">$ {{offer.price}} </h6>
+                <p class="card-text">{{offer.name}}</p>
+                <button class="btn-cart btnAdd purchase-button">Buy</button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    
+  </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade row" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

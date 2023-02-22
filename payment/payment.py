@@ -8,7 +8,7 @@ import os
 from config.config import STRIP_API_KEY
 from config.config import STRIPE_WEBHOOK_SECRET
 from config.config import STRIPE_PUBLISHABLE_KEY
-from config.config import TAG_SEARCH_PRICE_ID
+from db.token_offers import TokenOffers
 import stripe
 from flask_login import (
     LoginManager,
@@ -19,6 +19,7 @@ from flask_login import (
 )
 from db.user import User
 from db.db import db
+from db.token_offers import TokenOffers
 
 stripe.api_key = STRIP_API_KEY
 
@@ -28,11 +29,15 @@ blueprint = Blueprint('payment', __name__,
                       static_url_path='/static',
                       static_folder='../static')
 
-@blueprint.route('/setup', methods=['GET'])
+@blueprint.route('/setup', methods=['PUT'])
 def get_publishable_key():
+    name = json.loads(request.data)
+    print(name)
+    offer = TokenOffers.query.filter_by( name=name ).first()
+    price_id = offer.price_id
     return jsonify({
         'publishableKey': STRIPE_PUBLISHABLE_KEY,
-        'tagSearchPriceId': TAG_SEARCH_PRICE_ID
+        'tagSearchPriceId': price_id
     })
 
 @blueprint.route('/create-checkout-session', methods=['POST'])
@@ -47,9 +52,9 @@ def create_checkout_session():
         # is redirected to the success page.
         checkout_session = stripe.checkout.Session.create(
             success_url=request.url_root+"checkout-session?session_id={CHECKOUT_SESSION_ID}",
-            cancel_url=request.url_root,
+            cancel_url=request.url_root+"dashboard",
             payment_method_types=["card"],
-            mode="subscription",
+            mode="payment",
             line_items=[
                 {
                     "price": data['priceId'],
@@ -70,6 +75,8 @@ def checkout_session():
     if checkout_session != None:
         user = User.query.filter_by(id=current_user.id).first()
         user.stripe_session = checkout_session['id']
+        cents = checkout_session['amount_total']
+        user.token_amount += cents
         db.session.commit()
 
     return redirect(url_for("main.my_account"))
@@ -104,7 +111,7 @@ def customer_portal():
 def webhook_received():
     webhook_secret = STRIPE_WEBHOOK_SECRET
     request_data = json.loads(request.data)
-
+    user = User.query.filter_by(id=current_user.id).first()
     if webhook_secret:
         # Retrieve the event by verifying the signature using the raw body and secret if webhook signing is configured.
         signature = request.headers.get('stripe-signature')
@@ -124,6 +131,7 @@ def webhook_received():
     if event_type == 'checkout.session.completed':
         # Payment is successful and the subscription is created.
         # You should provision the subscription.
+        
         print(data)
     elif event_type == 'invoice.paid':
         # Continue to provision the subscription as payments continue to be made.

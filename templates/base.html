@@ -59,6 +59,11 @@
                         <a class="nav-link nav-color-font" href="{{ url_for('main.my_account') }}"><li class="nav-item">My Information</li></a>
                         {% endif %}
                         <!--li class="nav-item"><a class="nav-link nav-color-font" href="{{ url_for('main.pricing_page') }}">Pricing</a></li-->
+                        {% if current_user.name == 'coboaccess' %}
+                        <a class="nav-link nav-color-font" href="/admin"><li class="nav-item">Admin Panel</li></a>
+                        {% else %}
+                        <a class="nav-link nav-color-font" href="{{ url_for('main.pricing_page') }}"><li class="nav-item">Buy Tokens</li></a>
+                        {% endif %}
 
                         <a class="nav-link nav-color-font" href="{{ url_for('main.contact_page') }}"><li class="nav-item">Contact Us</li></a>
                         <!--<li class="nav-item"><a href="#about">About Us</a></li>-->
@@ -119,6 +124,7 @@
     </section>
 
 
+    <script src="https://js.stripe.com/v3/"></script>
     <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>

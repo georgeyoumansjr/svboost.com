@@ -50,7 +50,13 @@ fetch("setup")
     var annualyPriceId = json.annualyPriceId;
 
     var stripe = Stripe(publishableKey);
+
+    
+
+
     // Setup event handler to create a Checkout Session when button is clicked
+
+    /*
     document.getElementById("offer1")
       .addEventListener("click", function(evt) {
 			var settings = {
@@ -110,4 +116,5 @@ fetch("setup")
 				}
 			});
     });
+    */
   });

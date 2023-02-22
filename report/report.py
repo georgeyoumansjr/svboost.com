@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from flask import request, jsonify
+from flask import request, jsonify, redirect
 from .getreport import filter_video_by_id
 from .getreport import filter_video_by_id_keyword
 from .getreport import get_videos_statistics
@@ -25,8 +25,10 @@ from flask_login import (
 )
 from .getreport import get_suggestions_webscraper
 from db.db import db
+from db.user import User
 import uuid
-import calendar;
+import calendar
+import openai
 
 
 blueprint = Blueprint('report', __name__,
@@ -102,27 +104,40 @@ def get_tag_report():
         return "missing value in request"
 
 @blueprint.route("/get-description-builder-keywords", methods=['GET'])
+@login_required
 def get_description_builder_keywords():
+    
     global search_by_keyword_result
-
+    user = User.query.filter_by(id=current_user.id).first()
+    if user.token_amount < 5:
+        redirect('/pricing_page')
     if 'keyword' in request.args:
-        import openai
         keyword = str(request.args['keyword'])
 
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt="Write a video description about "+keyword,
-            max_tokens=200,
-            temperature=0.5
-        )
+        try:
+            response = openai.Completion.create(
+                model="text-davinci-003",
+                prompt="Write a video description about "+keyword,
+                max_tokens=1000,
+                temperature=0.9,
+                n=3,
+            )
+            # decrease user's tokens
+            user.token_amount -= 5
+            db.session.commit()
+            json_data={}
+            json_data['1'] = response['choices'][0]['text']
+            json_data['2'] = response['choices'][1]['text']
+            json_data['3'] = response['choices'][2]['text']
 
-        json_data = response['choices'][0]['text']
+            #search_by_keyword_result = report_by_keyword(keyword)
+            #bdes = frequency_by_video_description(search_by_keyword_result)
+            json_data = jsonify(json_data)
 
-        #search_by_keyword_result = report_by_keyword(keyword)
-        #bdes = frequency_by_video_description(search_by_keyword_result)
-        json_data = jsonify(json_data)
-
-        return json_data
+            return json_data
+        except:
+            db.session.rollback()
+            return 'there is an error'
     else:
         return "missing value in request"
 

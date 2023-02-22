@@ -17,13 +17,15 @@
 
 {% block content_search_page %}
     <main class="border1">
-        <h1>DESCRIPTION WRITER</h1>
+        <h1>AI DESCRIPTION BUILDER</h1>
         <p>This feature aids in building your YouTube description details. This feature will give out descriptions you can use to rank better on the YouTube algorithm.</p>
         <div class="row">
             <div class="col col-1"></div>
             <div class="col-10 main-center" >
                 <section class="search">
                     <form>
+                        <h6>You have <span id="token_amount">{{token_amount}}</span> Tokens. Writing a description costs 5 Tokens.</h6>
+                        <h6>You can write <span id="description_amount">{{description_amount}}</span> descriptions with AI. </h6> <br>
                         <h6>Key in your topic for the description:</h6>
                         <div>
                             <input style="width: 100%;" type="text" size="" id="keyword" name="keyword">

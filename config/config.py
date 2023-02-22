@@ -4,7 +4,8 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 
 ROOT = '/home/tnhlabsc/svboost.com'
-#ROOT = '/mnt/c/Users/admin/Documents/Github/svboost.com'
+if not os.path.isdir(ROOT):
+    ROOT = '/mnt/c/Users/admin/Documents/Github/svboost.com'
 
 
 os.environ['OPENBLAS_NUM_THREADS'] = '1'
@@ -30,6 +31,7 @@ EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 STRIP_API_KEY = os.getenv("STRIP_API_KEY")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
 STRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY")
+STRIPE_PRODUCT_ID = os.getenv("STRIPE_PRODUCT_ID")
 TAG_SEARCH_PRICE_ID = os.getenv("TAG_SEARCH_PRICE_ID")
 USER_ADMIN = os.getenv("USER_ADMIN")
 PASSWORD_ADMIN = os.getenv("PASSWORD_ADMIN")

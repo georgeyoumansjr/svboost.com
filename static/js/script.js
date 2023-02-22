@@ -41,7 +41,19 @@ var showErrorMessage = function(message) {
 };
 
 /* Get your Stripe publishable key to initialize Stripe.js */
-fetch("/setup")
+parent = document.getElementById('offers-parent-div');
+cards = Array.from( parent.getElementsByClassName("card"));
+cards.forEach((card) => {
+  
+  button = card.getElementsByClassName("purchase-button")[0];
+  text = card.getElementsByClassName("card-text")[0];
+  text = text.textContent;
+    button.addEventListener("click", function(evt) {
+fetch("/setup", {
+  method: 'PUT',
+  body: JSON.stringify(text)
+  
+})
   .then(handleFetchResult)
   .then(function(json) {
     var publishableKey = json.publishableKey;
@@ -49,30 +61,29 @@ fetch("/setup")
 
     var stripe = Stripe(publishableKey);
     // Setup event handler to create a Checkout Session when button is clicked
-    document.getElementById("offer1")
-      .addEventListener("click", function(evt) {
-			var settings = {
-			    "async": true,
-			    "crossDomain": true,
-			    "url": "user",
-			    "method": "GET",
-			    "headers": {
-			        "content-type": "application/x-www-form-urlencoded",
-			        "cache-control": "no-cache"
-			    }
-			}
-		    $.ajax(settings).done(function (response) {
-			    console.log(response);
-			    if(response.authenticated){
-			        createCheckoutSession(tagSearchPriceId).then(function(data) {
-			          stripe.redirectToCheckout({
-			            sessionId: data.sessionId
-			          }).then(handleResult);
-			        });
-				}
-				else {
-					$('#exampleModal').modal('show');
-				}
-			});
-      });
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "user",
+            "method": "GET",
+            "headers": {
+                "content-type": "application/x-www-form-urlencoded",
+                "cache-control": "no-cache"
+            }
+        }
+          $.ajax(settings).done(function (response) {
+            console.log(response);
+            if(response.authenticated){
+                createCheckoutSession(tagSearchPriceId).then(function(data) {
+                  stripe.redirectToCheckout({
+                    sessionId: data.sessionId
+                  }).then(handleResult);
+                });
+          }
+          else {
+            $('#exampleModal').modal('show');
+          }
+        });
+        });
+    });
   });
