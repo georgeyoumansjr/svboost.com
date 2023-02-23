@@ -235,7 +235,10 @@ def own_login():
                     if user.is_active:
                         login_user(user)
                     else:
-                        return redirect(url_for("main.login_page", message="Account is not verified"))
+                        user.is_active = True
+                        # Remove this part in the future !!!
+                        login_user(user)
+                        #return redirect(url_for("main.login_page", message="Account is not verified"))
 
                     resp = make_response(redirect(url_for("main.index")))
                     resp.set_cookie('usersession', 'content', 600)
@@ -263,14 +266,15 @@ def own_register():
                 user = User(
                     id=unique_id, name=user_name, email=email, password=password, profile_pic='', is_active=False
                 )
-                code, timestamp = send_confirm_email(user, url_for('authentication.confirm_email', _external=True), "confirmation_email.html")
-                user.token = code
-                user.expiry = timestamp
+                #code, timestamp = send_confirm_email(user, url_for('authentication.confirm_email', _external=True), "confirmation_email.html")
+                #user.token = code
+                #user.expiry = timestamp
 
                 db.session.add(user)
                 db.session.commit()
 
-                return redirect(url_for("main.login_page", message='You were registered with success. A verification link was sent to your email to confirm your account.'));
+                return redirect(url_for("main.login_page", message='You were registered with success.'));
+                #return redirect(url_for("main.login_page", message='You were registered with success. A verification link was sent to your email to confirm your account.'));
 
             else:
                 return redirect(url_for("main.register_page", message='There is already an account registered with chosen email'));

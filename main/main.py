@@ -210,6 +210,7 @@ def cart():
 @login_required
 def my_account():
     message = ''
+    db_user = User.query.filter_by(id=current_user.id).first()
     if 'message' in request.args:
         message = request.args['message']
 
@@ -217,7 +218,7 @@ def my_account():
         "name": current_user.name,
         "email": current_user.email
     }
-
+    print(current_user.password)
     if current_user.password != 'None':
         return render_template(templates_path+"my_account.html", user=user, editpass='True', message=message)
     else:

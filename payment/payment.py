@@ -79,7 +79,7 @@ def checkout_session():
         user.token_amount += cents
         db.session.commit()
 
-    return redirect(url_for("main.my_account"))
+    return redirect(url_for("main.index"))
 
 @blueprint.route('/customer-portal', methods=['GET'])
 def customer_portal():

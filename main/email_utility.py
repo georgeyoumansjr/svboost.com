@@ -85,4 +85,5 @@ def send_email_helper(subject, message_body, to=EMAIL):
         response = send_message(service=service, message=message)
     else:
         response = 'Fail when loading credentials'
+    print(response)
     return response
