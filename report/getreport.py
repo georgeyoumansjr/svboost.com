@@ -66,6 +66,8 @@ def frequency_by_video_description(search_result)->list:
     result = sorted(result, key=lambda x: x[1], reverse=True)
     total_size = len(result)
     slice_number = int(total_size*0.07)
+    if slice_number > 30:
+        slice_number = 30
     result = result[0:slice_number]
     result = to_list(result)
     return result

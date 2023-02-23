@@ -68,9 +68,10 @@ function search_for_keyword_description_builder(){
             for(i=1;i<4;i++) {
 
                 desc = '<div> Your Description: </div>'
-                +'<div id="tocopy" style=" border: 1px solid gray; padding: 5px; background-color: white; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); ">'+response[i]+
-                '</div> <button class="btnbuild" onclick="copyToClipboard()">Copy</button>';
-                
+                +'<div id="'+'tocopy'+i.toString()+'" style=" border: 1px solid gray; padding: 5px; background-color: white; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); ">'+response[i]+
+                '</div> <button class="btnbuild" onclick="copyToClipboard('+'tocopy'+i.toString()+')">Copy</button>'+
+                '<div hidden class="alert alert-secondary mt-2" role="alert" id="displayMessage'+i.toString()+'"></div>';
+            
                 $(".result").append(
                 '<div>'
                 +desc

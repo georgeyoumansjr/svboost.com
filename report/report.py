@@ -30,7 +30,7 @@ import uuid
 import calendar
 from config.config import OPENAI_API_KEY
 import openai
-openai.api_key = OPENAI_API_KEY
+#openai.api_key = OPENAI_API_KEY
 
 
 blueprint = Blueprint('report', __name__,
@@ -134,7 +134,6 @@ def get_description_builder_keywords():
                     max_tokens=1000,
                     temperature=0.9,
                     n=3)
-
             # decrease user's tokens
             user.token_amount -= 5
             db.session.commit()
@@ -145,10 +144,9 @@ def get_description_builder_keywords():
             #search_by_keyword_result = report_by_keyword(keyword)
             #bdes = frequency_by_video_description(search_by_keyword_result)
             json_data = jsonify(json_data)
-
             return json_data
-        except:
-            print()
+        except Exception as e:
+            print(e)
             db.session.rollback()
             return 'error'
     else:

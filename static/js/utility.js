@@ -253,8 +253,8 @@ function search_for_description_report(){
         $(".result").show();
         $('#searchLoading').attr("hidden",true);
         var content = to_list_template_new(response)
-        sessionStorage.setItem("content", response);
-        $(".result").append('<div>' + content + '<button class="btnbuild" onclick="go_to_ai_page()">Write a Description Using These Keywords With AI</button>' + '</div>');
+        
+        $(".result").append( '<div>' + content + '<button class="btnbuild" onclick="go_to_ai_page()">Write a Description Using These Keywords With AI</button>' + '</div>');
         renderTag();
     })
 }
@@ -344,6 +344,7 @@ function to_list_template(data) {
     return ol;
 }
 */
+
 function to_list_template_new(data) {
     var div = '<div id="tocopy" class="simple-tags" data-simple-tags="';
     var items = '';
@@ -357,7 +358,18 @@ function to_list_template_new(data) {
 }
 
 function go_to_ai_page(){
-
+    div = document.getElementById('tocopy')
+	var txt = '';
+    
+	var list = div.getElementsByTagName("li");
+    
+    for (i=0; i<list.length; i++){
+        li = list[i];
+        txt += (li.textContent || li.innerText) + ', ';
+    }
+	
+    
+    sessionStorage.setItem("content", txt);
     window.location.href = '/description-checker';
 }
 
@@ -417,40 +429,42 @@ $(".search form input").keypress(function(event){
 function copyToClipboard(elm) {
 	/* Get the text field */
 	//var elm = document.getElementById(elm_name);
-	var newEl = document.createElement("textarea");
+	//var newEl = document.createElement("textarea");
 	var txt = '';
+    var display_message = '';
+    try{
+        var list = elm.getElementsByTagName("li");
 
-	var list = elm.getElementsByTagName("li");
+        if (list.length > 0) {
+            for (i=0; i<list.length; i++){
+                li = list[i];
+                txt += (li.textContent || li.innerText) + ', ';
+            }
+            txt = txt.slice(0, -2);
+            
+        } else {
+            elm.focus();
+            elm.select();
+        }
+    }catch(error){
+        display_message = elm.id.slice(-1);
+        txt = elm.innerText;
+    }
+    navigator.clipboard.writeText(txt)
+    .then(function() {
+        $("#displayMessage"+display_message).empty();
+        $("#displayMessage"+display_message).append("Copied content to clipboard");
+        setTimeout(function () {  $("#displayMessage"+display_message).attr("hidden",false); }, 100);
+        setTimeout(function () {  $("#displayMessage"+display_message).attr("hidden",true); }, 4000);
 
-	if (list.length > 0) {
-		for (i=0; i<list.length; i++){
-			li = list[i];
-			txt += (li.textContent || li.innerText) + ', ';
-		}
-		newEl.value = txt.slice(0, -2);
-		newEl.type = "hidden";
-		document.body.appendChild(newEl);
-		newEl.focus();
-	    newEl.select();
-	} else {
-		elm.focus();
-        elm.select();
-	}
-
-	try {
-		var successful = document.execCommand('copy');
-		document.body.removeChild(newEl);
-		$("#displayMessage").empty();
-		$("#displayMessage").append("Copied content to clipboard");
-        setTimeout(function () {  $("#displayMessage").attr("hidden",false); }, 100);
-        setTimeout(function () {  $("#displayMessage").attr("hidden",true); }, 4000);
-	} catch (err) {
-		document.body.removeChild(newEl);
-		$("#displayMessage").empty();
-		$("#displayMessage").append("Failed to copy content to clipboard");
-        setTimeout(function () {  $("#displayMessage").attr("hidden",false); }, 100);
-        setTimeout(function () {  $("#displayMessage").attr("hidden",true); }, 4000);
-	}
+    })
+    .catch(function() {
+        console.error('Failed to copy text to clipboard');
+        $("#displayMessage"+display_message).empty();
+        $("#displayMessage"+display_message).append("Failed to copy content to clipboard");
+        setTimeout(function () {  $("#displayMessage"+display_message).attr("hidden",false); }, 100);
+        setTimeout(function () {  $("#displayMessage"+display_message).attr("hidden",true); }, 4000);
+    });
 
 }
 function validate(event) {
@@ -509,7 +523,8 @@ function getShowTour(resource){
 }
 
 function to_list_template_new(data) {
-    var div = '<div><p style="margin-left:20px;"> <strong> <em> These suggestions may help your videos rank higher on YouTube search. <strong><a href="#" onclick="raiseTipsModal(event)">See more ></a></strong></em> </strong></p></div>' +
+    var div = '<div><p style="margin-left:20px;"> <strong> <em> These suggestions may help your videos rank higher on YouTube search. <strong><a href="#" onclick="raiseTipsModal(event)">See more ></a></strong></em> </strong></p>'+
+    '<p style="margin-left:20px;">Please remove keywords that you feel are not relevant.</p>'+'</div>' +
     '<div id="tocopy" class="simple-tags" data-simple-tags="';
     var items = '';
 
