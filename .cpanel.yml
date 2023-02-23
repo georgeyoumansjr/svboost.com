@@ -13,7 +13,6 @@ deployment:
  - /bin/cp -R templates $DEPLOYPATH
  - /bin/cp -R tmp $DEPLOYPATH
  - /bin/cp -R Wiki $DEPLOYPATH
- - /bin/cp .db $DEPLOYPATH
  - /bin/cp .env $DEPLOYPATH
  - /bin/cp app.py $DEPLOYPATH
  - /bin/cp deploy.sh $DEPLOYPATH

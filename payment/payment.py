@@ -77,6 +77,7 @@ def checkout_session():
         user.stripe_session = checkout_session['id']
         cents = checkout_session['amount_total']
         user.token_amount += cents
+        print(user.email+' bought ' + cents + 'tokens!')
         db.session.commit()
 
     return redirect(url_for("main.index"))

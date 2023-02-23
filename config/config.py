@@ -40,4 +40,5 @@ USERNAMEDB = os.getenv("USERNAMEDB")
 PASSWORDDB = os.getenv("PASSWORDDB")
 SERVERDB = os.getenv("SERVERDB")
 NAMEDB = os.getenv("NAMEDB")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 

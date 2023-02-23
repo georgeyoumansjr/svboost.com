@@ -5,6 +5,7 @@ function search_for_keyword_description_builder(){
 	"and the remaining ones will be used to guide you on how to build your video description.")
     */
     var keyword = $("#keyword").val()
+    var keywords = $("#keywords").val()
     //var checked_language = $("input[type='radio'][name='language']:checked").val();
     var checked_language = "";
 
@@ -22,9 +23,15 @@ function search_for_keyword_description_builder(){
             "language": [checked_language]
         }
     }
+    if( keywords != '' ){
+        settings['data']['keywords'] = keywords;
+    }
 
 	$('.load-animation').attr("hidden",false);
     $.ajax(settings).done(function (response) {
+        if( response == 'error' ){
+            return
+        }
         $(".result").empty();
         $("#spinner").hide();
         $(".result").show();
