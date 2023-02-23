@@ -1,3 +1,14 @@
+function get_session_storage(){
+
+    var keyword = sessionStorage.getItem('keyword');
+    var keywords = sessionStorage.getItem('content');
+    if(keyword && keywords){
+        $("#keyword").val(keyword)
+
+        $("#keywords").val(keywords)
+    }
+        
+}
 function search_for_keyword_description_builder(){
     /*
 	$("#tipBody").text("This tool helps you to build your YouTube video description. Just key in your topic, " +

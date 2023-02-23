@@ -174,11 +174,10 @@ function search_by_keyword_scraper(){
             "keyword": keyword
         }
     }
-
+    
 	showResult()
     $.ajax(settings).done(function (response) {
         $("#spinner").hide();
-        console.log(response)
         $(".result").empty();
         $(".result").show();
         $('#searchLoading').attr("hidden",true);
@@ -226,8 +225,8 @@ function search_for_tag_report(){
 
 function search_for_description_report(){
 	$("#tipBody").text("By using this feature, you can find keywords that most occur top video's descriptions.")
-
     var keyword = $("#keyword").val()
+    sessionStorage.setItem("keyword", keyword);
     $("#spinner").show();
     $( ".result" ).hide();
     $( "#wait_time" ).hide();
@@ -254,7 +253,8 @@ function search_for_description_report(){
         $(".result").show();
         $('#searchLoading').attr("hidden",true);
         var content = to_list_template_new(response)
-        $(".result").append('<div>' + content + '</div>');
+        sessionStorage.setItem("content", response);
+        $(".result").append('<div>' + content + '<button class="btnbuild" onclick="go_to_ai_page()">Write a Description Using These Keywords With AI</button>' + '</div>');
         renderTag();
     })
 }
@@ -352,8 +352,13 @@ function to_list_template_new(data) {
 		items += item + ',';
     });
 
-	div += items.slice(0, -1) + '">  </div> <button class="btnbuild" onclick="copyToClipboard()">Copy</button>';
+	div += items.slice(0, -1) + '"> </div> <button class="btnbuild" onclick="copyToClipboard()">Copy</button>';
     return div;
+}
+
+function go_to_ai_page(){
+
+    window.location.href = '/description-checker';
 }
 
 function renderTag () {
