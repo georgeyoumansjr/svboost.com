@@ -57,9 +57,10 @@ FLASK_STATE = 0
 from flask import flash
 import stripe
 stripe.api_key = STRIP_API_KEY
+
 class CustomTokenOffersView(ModelView):
-    column_exclude_list = ['product_id', 'price_id']
-    form_excluded_columns = ['product_id', 'price_id']
+    #column_exclude_list = ['product_id', 'price_id']
+    #form_excluded_columns = ['product_id', 'price_id']
 
     def create_model(self, form):
         # Call the default create_model method to create the object

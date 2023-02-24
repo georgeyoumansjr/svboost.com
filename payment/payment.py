@@ -19,7 +19,6 @@ from flask_login import (
 )
 from db.user import User
 from db.db import db
-from db.token_offers import TokenOffers
 
 stripe.api_key = STRIP_API_KEY
 
