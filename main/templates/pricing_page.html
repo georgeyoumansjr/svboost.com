@@ -5,20 +5,21 @@
 
 {% block content %}
 <center>
-    <div style="background-color: aliceblue;">
-        <h4>To learn more about our pricing and how tokens being used: <a href="pricing_page/info">Click Here!</a></h4>
+    <div id="info_page">
+        <h4>To learn more about our pricing and how tokens being used: <a id="info_page_link" href="pricing_page/info">Click Here!</a></h4>
     </div>
+    <hr>
 </center>
 <div class="row" id="offers-parent-div">
     {% for offer in offers %}
-        <div class="col-sm-6">
-            <div class="card" style="width: 18rem;">
+        <div class="col-sm-4">
+            <div class="card border-secondary mb-3">
                 <div class="card-body">
-                <h5 class="card-title">{{ offer.token_amount }} Tokens</h5>
-                <h6 class="card-subtitle mb-2 text-muted">$ {{offer.price}} </h6>
+                <h5 class="card-title">$ {{offer.price}}</h5><hr>
+                <h6 class="card-subtitle mb-2"><span id="amount_of_dollars">{{ offer.token_amount }}</span> Tokens</h6>
                 <p class="card-text">{{offer.name}}</p>
-                <button class="btn-cart btnAdd purchase-button">Buy</button>
-                </div>
+            </div>
+            <button id="purchase-button" class="btn-cart btnAdd purchase-button">Buy</button>
             </div>
         </div>
     {% endfor %}
