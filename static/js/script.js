@@ -47,7 +47,7 @@ cards.forEach((card) => {
   
 button = card.getElementsByClassName("purchase-button")[0];
 button.addEventListener("click", function(evt) {
-  text = card.getElementsByClassName("card-text")[0];
+text = card.getElementsByClassName("card-text")[0];
 text = text.textContent;
 fetch("/setup", {
   method: 'PUT',

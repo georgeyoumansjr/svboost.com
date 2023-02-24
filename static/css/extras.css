@@ -33,14 +33,14 @@
     color: black;
     font-weight: bold;
 }
-#purchase-button {
+.purchase-button {
     border: none;
     font-size: large;
     font-stretch: extra-expanded;
     width:100%;
     padding: 15px 0px;
 }
-#purchase-button:hover {
+.purchase-button:hover {
     transition-duration: 200ms;
     background-color: rgb(219, 217, 217);
 }
