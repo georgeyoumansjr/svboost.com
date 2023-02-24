@@ -254,7 +254,7 @@ function search_for_description_report(){
         $('#searchLoading').attr("hidden",true);
         var content = to_list_template_new(response)
         
-        $(".result").append( '<div>' + content + '<button class="btnbuild" onclick="go_to_ai_page()">Write a Description Using These Keywords With AI</button>' + '</div>');
+        $(".result").append( '<div>' + content + '<button id="ai_page_button" class="btnbuild" onclick="go_to_ai_page()">Click Here to Write a Description Using These Keywords with AI</button>' + '</div>');
         renderTag();
     })
 }

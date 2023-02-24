@@ -140,5 +140,5 @@ def internal_server_error(e):
     return render_template('500.html'), 502
 
 if __name__ == "__main__":
-    app.run( port=8000, debug=True )
+    app.run( port=8000 )
 

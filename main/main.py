@@ -143,6 +143,8 @@ def register_page():
 
 @blueprint.route("/login-page", methods=['GET'])
 def login_page():
+    if current_user.is_authenticated:
+        return redirect('/dashboard')
     return render_template(templates_path+"login_page.html")
     #arr = []
     #print(arr["index"])

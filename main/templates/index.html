@@ -63,7 +63,7 @@
                     <div class="col col-6">
                       <div class="feature-inner">
                         <br><br>
-                        <h4 class="feature-title mt-24">Search Trending Suggested Keywords</h4>
+                        <h4 class="feature-title mt-24">Search Trending Suggested Video Ideas</h4>
                         <p class="text-sm mb-0">This feature helps you find the top topics in your niche that are trending and people are excited about.</p>
                         <br><br>
                         </div>
@@ -86,6 +86,21 @@
           <br><br>
           <br><br>
             <h3 style="text-align: center;"><b>SAVED SEARCHES</b></h3>
+            <h5 class="collapsible"><b>&nbsp;KEYWORDS</b></h5>
+                <div class="content">
+                    {% if key_re %}
+                        {% for key in key_re %}
+                            {% if key == 'Blocked' %}
+                                <p>- Blocked</p>
+                            {% endif %}
+
+                            <a href="{{ url_for('main.search_summary', term=key.term) }}">{{key.term}}</a>  <span style="float:right">{{key.search_date}}</span>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <p>- There's no search yet</p>
+                    {% endif %}
+                </div>
             <h5 class="collapsible"><b>&nbsp;TAGS</b></h5>
                 <div class="content">
                     {% if tag_re %}
@@ -101,7 +116,7 @@
                         <p>- There's no search yet</p>
                     {% endif %}
                 </div>
-            <h5 class="collapsible"><b>&nbsp;DESCRIPTIONS</b></h5>
+            <h5 class="collapsible"><b>&nbsp;VIDEO IDEAS</b></h5>
             <div class="content">
                 {% if des_re %}
                     {% for des in des_re %}
@@ -116,22 +131,7 @@
                     <p>- There's no search yet</p>
                 {% endif %}
             </div>
-            <h5 class="collapsible"><b>&nbsp;SUGGESTIONS</b></h5>
-                <div class="content">
-                    {% if key_re %}
-                        {% for key in key_re %}
-                            {% if key == 'Blocked' %}
-                                <p>- Blocked</p>
-                            {% endif %}
-
-                            <a href="{{ url_for('main.search_summary', term=key.term) }}">{{key.term}}</a>  <span style="float:right">{{key.search_date}}</span>
-                            <hr>
-                        {% endfor %}
-                    {% else %}
-                        <p>- There's no search yet</p>
-                    {% endif %}
-                </div>
-            <h5 class="collapsible"><b>&nbsp;DESCRIPTION CHECKER</b></h5>
+            <h5 class="collapsible"><b>&nbsp;AI DESCRIPTION WRITER</b></h5>
                 <div class="content">
                     {% if buil_re %}
                         {% for buil in buil_re %}
