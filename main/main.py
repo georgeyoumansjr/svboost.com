@@ -135,6 +135,7 @@ def user_is_authorized():
 
 @blueprint.route("/", methods=['GET'])
 def landing_page():
+    
     return render_template("landing_page.html")
 
 @blueprint.route("/register", methods=['GET'])
