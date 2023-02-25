@@ -231,43 +231,59 @@ def update_my_information():
     message = 'update with success'
     name = request.form.get("name")
     email = request.form.get("email")
+    user = User.query.filter_by(id=current_user.id).first()
     password = request.form.get("password")
-    print(">>> Current password hash {}".format(password))
+    if password:
+        print(">>> Current password hash {}".format(password))
 
-    newpassword = request.form.get("newpassword")
-    repeatpassword = request.form.get("repeatpassword")
+        newpassword = request.form.get("newpassword")
+        repeatpassword = request.form.get("repeatpassword")
 
-    try:
 
-        user = User.query.filter_by(id=current_user.id).first()
-        if user:
+        try:
+
+            if user:
+                user.name = name
+                user.email = email
+                print(">>> Current password hash {}".format(password))
+                if password != "":
+
+                    md5_obj = hashlib.md5(password.encode())
+                    password = md5_obj.hexdigest()
+
+                    if password == user.password:
+                        if newpassword == repeatpassword:
+                            md5_obj = hashlib.md5(newpassword.encode())
+                            newpassword = md5_obj.hexdigest()
+                            user.password = newpassword
+                            print(user.password)
+                    else:
+                        message = 'current password incorrect'
+                db.session.commit()
+                user = {
+                    'name' : current_user.name,
+                    'email' : current_user.email
+                }
+                return redirect(url_for("main.my_account",  user=user, message=message))
+            else:
+                return redirect(url_for("main.my_account", message='problem updating the information', user=user))
+        except Exception as e:
+            logging.error("Exception on update_my_information. {}".format(str(e)))
+            return redirect(url_for("main.my_account", message='problem updating the information', user=user))
+    else:
+        try:
             user.name = name
             user.email = email
-            print(">>> Current password hash {}".format(password))
-            if password != "":
-
-                md5_obj = hashlib.md5(password.encode())
-                password = md5_obj.hexdigest()
-
-                if password == user.password:
-                    if newpassword == repeatpassword:
-                        md5_obj = hashlib.md5(newpassword.encode())
-                        newpassword = md5_obj.hexdigest()
-                        user.password = newpassword
-                        print(user.password)
-                else:
-                    message = 'current password incorrect'
             db.session.commit()
             user = {
                 'name' : current_user.name,
                 'email' : current_user.email
             }
             return redirect(url_for("main.my_account",  user=user, message=message))
-        else:
+        except Exception as e:
+            logging.error("Exception on update_my_information. {}".format(str(e)))
             return redirect(url_for("main.my_account", message='problem updating the information', user=user))
-    except Exception as e:
-        logging.error("Exception on update_my_information. {}".format(str(e)))
-        return redirect(url_for("main.my_account", message='problem updating the information', user=user))
+    
 
 
 @blueprint.route("/payment_method/<id>", methods=['GET'])
