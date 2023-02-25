@@ -12,10 +12,10 @@
 </center>
 <div class="row" id="offers-parent-div">
     {% for offer in offers %}
-        <div class="col-sm-4">
+        <div class="col-sm-4 card-div">
             <div class="card border-secondary mb-3">
                 <div class="card-body">
-                <h5 class="card-title">$ {{offer.price}}</h5><hr>
+                <h5 class="card-title">{% if offer.price < 1 %} {{ (offer.price * 100)|int }} Cents {% else %}$ {{(offer.price)|int}} {% endif %}</h5><hr>
                 <h6 class="card-subtitle mb-2"><span id="amount_of_dollars">{{ offer.token_amount }}</span> Tokens  -  {{ offer.token_amount//5 }} Descriptions</h6>
                 <p class="card-text">{{offer.name}}</p>
             </div>
