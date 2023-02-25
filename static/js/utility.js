@@ -141,6 +141,7 @@ function search_by_keyword(){
             "keyword": keyword
         }
     }
+    var word = 'You can use these suggested keywords in our keyword search feature to generate the top keywords that can be used to optimize your YouTube description';
 
 	showResult()
     $.ajax(settings).done(function (response) {
@@ -149,7 +150,7 @@ function search_by_keyword(){
         $(".result").empty();
         $(".result").show();
         $('#searchLoading').attr("hidden",true);
-        var list = to_list_template_new(response)
+        var list = to_list_template_new(response,word)
         $(".result").append('<div>'+list+'</div>');
         renderTag();
     })
@@ -175,13 +176,15 @@ function search_by_keyword_scraper(){
         }
     }
     
+    var word = 'keywords';
+
 	showResult()
     $.ajax(settings).done(function (response) {
         $("#spinner").hide();
         $(".result").empty();
         $(".result").show();
         $('#searchLoading').attr("hidden",true);
-        var list = to_list_template_new(response)
+        var list = to_list_template_new(response,word)
         $(".result").append('<div>'+list+'</div>');
         renderTag();
     })
@@ -209,6 +212,8 @@ function search_for_tag_report(){
         }
     }
 
+    var word = "These are the most used tags associated with your keyword. You can copy to a notepad and use these tags in your video's description";
+
 	showResult()
     $.ajax(settings).done(function (response) {
         $("#spinner").hide();
@@ -217,7 +222,7 @@ function search_for_tag_report(){
         $(".result").empty();
         $(".result").show();
         $('#searchLoading').attr("hidden",true);
-        var list = to_list_template_new(response)
+        var list = to_list_template_new(response,word)
         $(".result").append('<div>'+list+'</div>');
         renderTag();
     })
@@ -245,6 +250,8 @@ function search_for_description_report(){
         }
     }
 
+    var word = 'Please remove the keywords that you feel are not relevant';   
+
 	showResult();
     $.ajax(settings).done(function (response) {
         $("#spinner").hide();
@@ -252,7 +259,7 @@ function search_for_description_report(){
         $(".result").empty();
         $(".result").show();
         $('#searchLoading').attr("hidden",true);
-        var content = to_list_template_new(response)
+        var content = to_list_template_new(response,word)
         
         $(".result").append( '<div>' + content + '<button id="ai_page_button" class="btnbuild" onclick="go_to_ai_page()">Click Here to Write a Description Using These Keywords with AI</button>' + '</div>');
         renderTag();
@@ -522,9 +529,9 @@ function getShowTour(resource){
     return $.ajax(settings)
 }
 
-function to_list_template_new(data) {
+function to_list_template_new(data, text) {
     var div = '<div><p style="margin-left:20px;"> <strong> <em> These suggestions may help your videos rank higher on YouTube search. <strong><a href="#" onclick="raiseTipsModal(event)">See more ></a></strong></em> </strong></p>'+
-    '<p style="margin-left:20px;">Please remove keywords that you feel are not relevant.</p>'+'</div>' +
+    '<p style="margin-left:20px;">'+text+'.</p>'+'</div>' +
     '<div id="tocopy" class="simple-tags" data-simple-tags="';
     var items = '';
 
