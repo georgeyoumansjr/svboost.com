@@ -141,8 +141,9 @@ function search_by_keyword(){
             "keyword": keyword
         }
     }
-    var word = 'You can use these suggested keywords in our keyword search feature to generate the top keywords that can be used to optimize your YouTube description';
 
+    var word = 'You can use these suggested keywords in <a href="/search-for-description-report">OUR KEYWORD SEARCH FEATURE</a> to generate the top keywords that can be used to optimize your YouTube description';
+    
 	showResult()
     $.ajax(settings).done(function (response) {
         $("#spinner").hide();
