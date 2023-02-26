@@ -112,7 +112,7 @@ def get_description_builder_keywords():
     global search_by_keyword_result
     user = User.query.filter_by(id=current_user.id).first()
     if user.token_amount < 5:
-        redirect('/pricing_page')
+        return redirect('/pricing_page')
     if 'keyword' in request.args:
         keyword = str(request.args['keyword'])
         try:

@@ -17,7 +17,7 @@ var handleFetchResult = function(result) {
 var createCheckoutSession = function(priceId) {
   console.log(priceId);
   return fetch("create-checkout-session", {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json"
     },
@@ -46,8 +46,6 @@ fetch("setup")
   .then(handleFetchResult)
   .then(function(json) {
     var publishableKey = json.publishableKey;
-    var monthlyPriceId = json.monthlyPriceId;
-    var annualyPriceId = json.annualyPriceId;
 
     var stripe = Stripe(publishableKey);
 

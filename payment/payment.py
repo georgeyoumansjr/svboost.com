@@ -28,16 +28,22 @@ blueprint = Blueprint('payment', __name__,
                       static_url_path='/static',
                       static_folder='../static')
 
-@blueprint.route('/setup', methods=['PUT'])
+@blueprint.route('/setup', methods=['PUT','GET'])
 def get_publishable_key():
-    name = json.loads(request.data)
-    print(name)
-    offer = TokenOffers.query.filter_by( name=name ).first()
-    price_id = offer.price_id
-    return jsonify({
-        'publishableKey': STRIPE_PUBLISHABLE_KEY,
-        'tagSearchPriceId': price_id
-    })
+    try:
+        name = json.loads(request.data)
+        print(name)
+        offer = TokenOffers.query.filter_by( name=name ).first()
+        price_id = offer.price_id
+        return jsonify({
+            'publishableKey': STRIPE_PUBLISHABLE_KEY,
+            'tagSearchPriceId': price_id
+        })
+    except:
+        return jsonify({
+            'publishableKey': STRIPE_PUBLISHABLE_KEY,
+        })
+
 
 @blueprint.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
@@ -75,9 +81,9 @@ def checkout_session():
         user = User.query.filter_by(id=current_user.id).first()
         user.stripe_session = checkout_session['id']
         cents = checkout_session['amount_total']
-        user.token_amount += cents
+        user.token_amount += int(cents/5)
         db.session.commit()
-        print(user.email+' bought ' + str(cents) + 'tokens!')
+        print(user.email+' bought ' + str(int(cents/5)) + 'tokens!')
 
     return redirect(url_for("main.index"))
 
