@@ -30,8 +30,6 @@ from config.config import STRIP_API_KEY
 from db.db import db
 from db.db import migrate
 from db.contact import Contact
-from db.user_resource_usage import UserResourceUsage
-from db.resource import Resource
 from db.user import User
 from db.admin_model_view import AdminModelView
 from db.token_offers import TokenOffers
