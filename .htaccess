@@ -3,4 +3,7 @@ PassengerAppRoot "/home/tnhlabsc/svboost.com"
 PassengerBaseURI "/"
 PassengerPython "/home/tnhlabsc/virtualenv/svboost.com/3.9/bin/python"
 PassengerAppLogFile "/home/tnhlabsc/log/svboost.log"
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
