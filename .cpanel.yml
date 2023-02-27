@@ -14,6 +14,7 @@ deployment:
  - /bin/cp -R tmp $DEPLOYPATH
  - /bin/cp -R Wiki $DEPLOYPATH
  - /bin/cp .env $DEPLOYPATH
+ - /bin/cp .htaccess $DEPLOYPATH
  - /bin/cp app.py $DEPLOYPATH
  - /bin/cp deploy.sh $DEPLOYPATH
  - /bin/cp favicon.ico $DEPLOYPATH
