@@ -28,15 +28,16 @@
         }
     </style>
     <script src="{{ url_for('static', filename='js/shepherd.js') }}"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-182398251-16"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'UA-182398251-16');
-    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NP4ZDP6');</script>
+    <!-- End Google Tag Manager -->
+    
     <!-- Facebook Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -62,6 +63,10 @@
 </head>
 
 <body class="public-access-body">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP4ZDP6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <main id="theBody">
         <div class="wrapper">
             <nav class="navbar navbar-expand-lg navbar-dark">
@@ -159,6 +164,8 @@
     <script src="{{ url_for('static', filename='js/description-builder-utility.js') }}"></script>
     <script src="{{ url_for('static', filename='js/success.js') }}"></script>
     <script src="{{ url_for('static', filename='js/tour.js') }}"></script>
+
+
 
     <script id="loading">
         var el;
