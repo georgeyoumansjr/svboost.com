@@ -29,9 +29,7 @@ def blog():
     blogs = Blog.query.order_by(Blog.publish_date.desc()).all()
     ## Delete the testing junk
     #db.session.query(Blog).delete()
-    for blog in blogs:
-        blog.title = blog.title.replace(' ','-')
-    db.session.commit()
+    #db.session.commit()
     return render_template('blog.html', title='Blog', blogs=blogs)
 
 @blueprint.route('/blog/<path>', methods=['GET'])
