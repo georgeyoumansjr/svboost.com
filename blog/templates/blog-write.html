@@ -89,7 +89,7 @@ function dataURLtoBlob(dataURL) {
     title = document.getElementById('title').innerText;
     title = title.trimRight();
     title = title.trimLeft();
-    //title = title.replace(' ','-')
+    title = title.replace(' ','-')
     const children = document.querySelectorAll("#page_content > *");
     
     children.forEach(element => {

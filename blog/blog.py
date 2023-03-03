@@ -28,8 +28,8 @@ blueprint = Blueprint('blog', __name__,
 def blog():
     blogs = Blog.query.order_by(Blog.publish_date.desc()).all()
     ## Delete the testing junk
-    #db.session.query(Blog).delete()
-    #db.session.commit()
+    db.session.query(Blog).delete()
+    db.session.commit()
     return render_template('blog.html', title='Blog', blogs=blogs)
 
 @blueprint.route('/blog/<path>', methods=['GET'])
@@ -51,7 +51,7 @@ def blog_write():
             text = text[:300]
         except:
             pass
-        if title == 'Title':
+        if title == 'Title' or title == '':
             return redirect('/blog')
         start_html = "{% extends 'blog-base.html' %} {% block inner_content %}"
         end_html = "{% endblock %}"

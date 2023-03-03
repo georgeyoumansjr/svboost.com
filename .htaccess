@@ -6,4 +6,5 @@ PassengerAppLogFile "/home/tnhlabsc/log/svboost.log"
 RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteRule ^blog/static/(.*)$ /path/to/static/folder/$1 [L]
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
