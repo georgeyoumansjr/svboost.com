@@ -14,6 +14,7 @@ from flask_login import (
 )
 
 # Internal import
+from blog import blog
 from main import main
 from report import report
 from authentication import authentication
@@ -92,6 +93,7 @@ admin.add_view(CustomTokenOffersView(TokenOffers, db.session))
 #admin.add_view(AdminModelView(TokenOffers, db.session))
 admin.add_view(AdminModelView(Contact, db.session))
 admin.add_view(AdminModelView(User, db.session))
+app.register_blueprint(blog.blueprint)
 app.register_blueprint(main.blueprint)
 app.register_blueprint(report.blueprint)
 app.register_blueprint(authentication.blueprint)
@@ -139,5 +141,5 @@ def internal_server_error(e):
     return render_template('500.html'), 502
 
 if __name__ == "__main__":
-    app.run( port=8000 )
+    app.run( port=8000, debug=True)
 

@@ -81,6 +81,7 @@
                     <ul class="navbar-nav mt-2 mt-lg-0">
                         {% if current_user.name == 'coboaccess' %}
                         <a class="nav-link nav-color-font" href="/admin"><li class="nav-item">Admin Panel</li></a>
+                        <a class="nav-link nav-color-font" href="/blog/write"><li class="nav-item">Write Blog</li></a>
                         {% endif %}
                         {% if current_user.is_authenticated %}
                         <a class="nav-link nav-color-font" href="{{ url_for('main.index') }}"><li class="nav-item">Dashboard</li></a>
@@ -89,6 +90,7 @@
                         {% endif %}
                         <!--li class="nav-item"><a class="nav-link nav-color-font" href="{{ url_for('main.pricing_page') }}">Pricing</a></li-->
                         
+                        <a class="nav-link nav-color-font" href="{{ url_for('blog.blog') }}"><li class="nav-item">Blog</li></a>
                         <a class="nav-link nav-color-font" href="{{ url_for('main.contact_page') }}"><li class="nav-item">Contact Us</li></a>
                         <!--<li class="nav-item"><a href="#about">About Us</a></li>-->
                         {% if current_user.is_authenticated %}

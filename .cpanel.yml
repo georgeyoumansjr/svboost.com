@@ -3,10 +3,10 @@ deployment:
  tasks:
  - export DEPLOYPATH=/home/tnhlabsc/svboost.com/
  - /bin/cp -R authentication $DEPLOYPATH
+ - /bin/cp -R blog $DEPLOYPATH
  - /bin/cp -R config $DEPLOYPATH
  - /bin/cp -R db $DEPLOYPATH
  - /bin/cp -R main $DEPLOYPATH
- - /bin/cp -R migrations $DEPLOYPATH
  - /bin/cp -R payment $DEPLOYPATH
  - /bin/cp -R report $DEPLOYPATH
  - /bin/cp -R static $DEPLOYPATH
