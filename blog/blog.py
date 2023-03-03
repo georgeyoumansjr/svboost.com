@@ -28,7 +28,9 @@ blueprint = Blueprint('blog', __name__,
 def blog():
     blogs = Blog.query.order_by(Blog.publish_date.desc()).all()
     ## Delete the testing junk
-    db.session.query(Blog).delete()
+    #db.session.query(Blog).delete()
+    for blog in blogs:
+        blog.title = blog.title.replace(' ','-')
     db.session.commit()
     return render_template('blog.html', title='Blog', blogs=blogs)
 
@@ -45,6 +47,7 @@ def blog_write():
         return redirect('/blog')
     if request.method == 'POST':
         title = request.form.get('title')
+        title =title.replace(' ','-')
         html = request.form.get('html')
         text = request.form.get('text')
         try:
