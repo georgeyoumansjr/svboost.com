@@ -55,10 +55,10 @@ def create_checkout_session():
         # {CHECKOUT_SESSION_ID} is a string literal; do not change it!
         # the actual Session ID is returned in the query parameter when your customer
         # is redirected to the success page.
+            # payment_method_types=["card"],
         checkout_session = stripe.checkout.Session.create(
             success_url=request.url_root+"checkout-session?session_id={CHECKOUT_SESSION_ID}",
             cancel_url=request.url_root+"dashboard",
-            # payment_method_types=["card"],
             mode="payment",
             line_items=[
                 {
@@ -80,7 +80,8 @@ def checkout_session():
     if checkout_session != None:
         user = User.query.filter_by(id=current_user.id).first()
         user.stripe_session = checkout_session['id']
-        cents = checkout_session['amount_total']
+        rupees = checkout_session['amount_total']
+        cents = rupees/80
         user.token_amount += int(cents/5)
         db.session.commit()
         print(user.email+' bought ' + str(int(cents/5)) + 'tokens!')

@@ -73,7 +73,7 @@ class CustomTokenOffersView(ModelView):
         price = stripe.Price.create(
             product=product.id,
             unit_amount=int(model.price * 100),
-            currency='usd'
+            currency='inr'
         )
         model.product_id = product.id
         model.price_id = price.id
