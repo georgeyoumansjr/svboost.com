@@ -2,6 +2,7 @@ from flask import request, jsonify
 from flask import redirect, url_for
 from flask import Blueprint, render_template
 from flask import flash
+from config.config import ROOT
 import json
 import os
 from flask_login import (
@@ -15,14 +16,16 @@ from db.user import User
 from db.db import db
 from db.blog import Blog
 
-BLOG_PATH = os.path.dirname(os.path.realpath(__file__))
+
+BLOG_PATH = os.path.join(ROOT, 'blogs')
 BLOG_IMG_DIR = os.path.join(BLOG_PATH, 'static')
 BLOG_TMPLT_DIR = os.path.join(BLOG_PATH, 'templates')
 
 blueprint = Blueprint('blog', __name__,
-                      template_folder='../blog/templates',
+                      template_folder='../blogs/templates',
                       static_url_path='/static/blog',
-                      static_folder='../blog/static')
+                      static_folder='../blogs/static')
+
 
 @blueprint.route('/blog', methods=['GET'])
 def blog():
@@ -35,8 +38,8 @@ def blog():
 @blueprint.route('/blog/<path>', methods=['GET'])
 def blog_read_more(path):
     blog = Blog.query.filter_by(title=path).first()
-    blog_dir = 'blogs' + '/' + blog.title
-    return render_template(f'{blog_dir}.html', title=blog)
+
+    return render_template(f'{blog.title}.html', title=blog)
 
 @blueprint.route('/blog/write', methods=['GET', 'POST'])
 @login_required
@@ -53,21 +56,21 @@ def blog_write():
         except:
             pass
         if title == 'Title' or title == '':
+            print('Title is invalid')
             return redirect('/blog')
         start_html = "{% extends 'blog-base.html' %} {% block inner_content %}"
         end_html = "{% endblock %}"
         dir_img_path = os.path.join(BLOG_IMG_DIR, title)
-        dir_tmplt_path = os.path.join(BLOG_TMPLT_DIR, 'blogs')
         if not os.path.exists(dir_img_path):
             os.makedirs(dir_img_path)
         try:
             for key in request.files:
                 image = request.files.get(key)
                 image.save(dir_img_path+'/'+image.filename)
-            with open(dir_tmplt_path + '/' + f'{title}.html', 'w') as file:
+            with open(BLOG_TMPLT_DIR + '/' + f'{title}.html', 'w') as file:
                 file.write(start_html + html + end_html)
-        except:
-            pass
+        except Exception as e:
+            print(e)
         db_entry = Blog(
             title = title,
             text = text
