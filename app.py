@@ -42,7 +42,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 if ENVIRONMENT == 'prod':
     app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{}:{}@{}/{}".format(USERNAMEDB, PASSWORDDB, SERVERDB, NAMEDB)
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}/{}.db'.format(ROOT,'')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}/{}.db'.format(ROOT)
     #app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{}:{}@{}/{}".format('svboost', 'password', 'localhost', 'svboost')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -73,7 +73,7 @@ class CustomTokenOffersView(ModelView):
         price = stripe.Price.create(
             product=product.id,
             unit_amount=int(model.price * 100),
-            currency='inr'
+            currency='usd'
         )
         model.product_id = product.id
         model.price_id = price.id

@@ -80,8 +80,7 @@ def checkout_session():
     if checkout_session != None:
         user = User.query.filter_by(id=current_user.id).first()
         user.stripe_session = checkout_session['id']
-        rupees = checkout_session['amount_total']
-        cents = rupees/80
+        cents = checkout_session['amount_total']
         user.token_amount += int(cents/5)
         db.session.commit()
         print(user.email+' bought ' + str(int(cents/5)) + 'tokens!')
