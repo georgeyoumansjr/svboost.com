@@ -123,7 +123,7 @@ def search_summary(term):
             )
 
 
-    return render_template(templates_path+"searched_term_summary.html", username=user.name, terms_re=terms_re, token_amount=token_amount)
+    return render_template(templates_path+"searched_term_summary.html", username=user.name, terms_re=terms_re)
 
 
 @blueprint.route("/user", methods=['GET'])
