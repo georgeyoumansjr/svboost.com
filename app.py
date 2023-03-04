@@ -42,7 +42,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 if ENVIRONMENT == 'prod':
     app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{}:{}@{}/{}".format(USERNAMEDB, PASSWORDDB, SERVERDB, NAMEDB)
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}/{}.db'.format(ROOT, NAMEDB)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}/{}.db'.format(ROOT,'')
     #app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{}:{}@{}/{}".format('svboost', 'password', 'localhost', 'svboost')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

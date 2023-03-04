@@ -58,7 +58,7 @@ def create_checkout_session():
         checkout_session = stripe.checkout.Session.create(
             success_url=request.url_root+"checkout-session?session_id={CHECKOUT_SESSION_ID}",
             cancel_url=request.url_root+"dashboard",
-            payment_method_types=["card"],
+            # payment_method_types=["card"],
             mode="payment",
             line_items=[
                 {
