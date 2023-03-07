@@ -42,7 +42,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 if ENVIRONMENT == 'prod':
     app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{}:{}@{}/{}".format(USERNAMEDB, PASSWORDDB, SERVERDB, NAMEDB)
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}/{}.db'.format(ROOT)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}/{}.db'.format(ROOT,'')
     #app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{}:{}@{}/{}".format('svboost', 'password', 'localhost', 'svboost')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -113,7 +113,7 @@ def load_user(user_id):
         user = User.query.filter_by(id=user_id).first()
         if user.email == 'coboaccess@gmail.com':
             user.is_admin = True
-            user.token_amount += 50
+            user.token_amount = 15
             db.session.commit()
         if user.is_admin == True:
             app.config['USER_ADMIN'] = user.email

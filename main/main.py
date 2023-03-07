@@ -152,7 +152,14 @@ def login_page():
 
 @blueprint.route("/contact_page", methods=['GET'])
 def contact_page():
-    return render_template(templates_path+"contact_page.html")
+    show = False
+    if current_user.is_authenticated:
+        user = User.query.get(current_user.id)
+        token_amount = user.token_amount
+        if token_amount < 5:
+            show = True
+        
+    return render_template(templates_path+"contact_page.html", show=show)
 
 
 @blueprint.route("/cart_page", methods=['GET'])
@@ -348,14 +355,27 @@ def search_by_keyword_scraper():
 # --------------------------------------------
 # ----------------- CHECKER ------------------
 # --------------------------------------------
+
+@blueprint.route("/how-many-tokens", methods=['GET'])
+@login_required
+def how_many_tokens():
+    user = User.query.filter_by(id=current_user.id).first()
+    return jsonify({'tokens':user.token_amount})
+
+@blueprint.route("/not-enough-tokens", methods=['GET'])
+@login_required
+def not_enough_tokens():
+    user = User.query.filter_by(id=current_user.id).first()
+    return render_template(templates_path+"/not_enough_tokens.html")
+
 from flask import flash
 @blueprint.route("/description-checker", methods=['GET'])
 @login_required
 def description_builder():
     user = User.query.filter_by(id=current_user.id).first()
     if user.token_amount == None or user.token_amount < 5:
-        flash("You don't have enough tokens.",'error')
-        return redirect('/pricing_page')
+        flash(f"User with email {user.email} ran out of tokens.",'error')
+        return redirect('/contact_page')
     token_amount = user.token_amount
     description_amount = int(token_amount/5)
     return render_template(templates_path+"/description_builder/description-builder.html", token_amount=token_amount, description_amount=description_amount)

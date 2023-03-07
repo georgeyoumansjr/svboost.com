@@ -66,7 +66,7 @@ def get_description_builder_keywords():
     global search_by_keyword_result
     user = User.query.filter_by(id=current_user.id).first()
     if user.token_amount < 5:
-        return redirect('/pricing_page')
+        return 'not enough tokens'
     if 'keyword' in request.args:
         keyword = str(request.args['keyword'])
         try:
@@ -75,33 +75,43 @@ def get_description_builder_keywords():
             keywords = ''
         try:
             if keywords != '':
-                response = openai.Completion.create(
-                    model="text-davinci-003",
-                    prompt="Write a video description about "+keyword+ " with these keywords: "+keywords,
+                prompt="Write a video description about "+keyword+ " with these keywords: "+keywords
+                response = openai.ChatCompletion.create(
                     max_tokens=1000,
                     temperature=0.9,
-                    n=3)
+                    model="gpt-3.5-turbo",
+                    messages=[
+                            {"role": "system", "content": "You are my assistant who writes youtube video descriptions."},
+                            {"role": "user", "content": prompt}
+                        ],
+                    n=3,
+                    )
             else:
-                response = openai.Completion.create(
-                    model="text-davinci-003",
-                    prompt="Write a video description about "+keyword,
+                prompt="Write a video description about "+keyword
+                response = openai.ChatCompletion.create(
                     max_tokens=1000,
                     temperature=0.9,
-                    n=3)
+                    model="gpt-3.5-turbo",
+                    messages=[
+                            {"role": "system", "content": "You are my assistant who writes youtube video descriptions."},
+                            {"role": "user", "content": prompt}
+                        ],
+                    n=3,
+                    )
             # decrease user's tokens
             user.token_amount -= 5
             db.session.commit()
+
             json_data={}
-            json_data['1'] = response['choices'][0]['text']
-            json_data['2'] = response['choices'][1]['text']
-            json_data['3'] = response['choices'][2]['text']
-            #search_by_keyword_result = report_by_keyword(keyword)
-            #bdes = frequency_by_video_description(search_by_keyword_result)
+            json_data['1'] = response['choices'][0]['message']['content']
+            json_data['2'] = response['choices'][1]['message']['content']
+            json_data['3'] = response['choices'][2]['message']['content']
             json_data = jsonify(json_data)
             return json_data
         except Exception as e:
             print(e)
-            db.session.rollback()
+
+            #db.session.rollback()
             return 'error'
     else:
         return "missing value in request"

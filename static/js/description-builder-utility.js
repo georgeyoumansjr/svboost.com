@@ -43,6 +43,10 @@ function search_for_keyword_description_builder(){
         if( response == 'error' ){
             return
         }
+        if( response == 'not enough tokens'){
+            return window.location = 'contact_page'
+        }
+
         $(".result").empty();
         $("#spinner").hide();
         $(".result").show();
@@ -52,6 +56,8 @@ function search_for_keyword_description_builder(){
 
         let value = parseInt(token_amount.textContent);
         let description_value = parseInt(description_amount.textContent);
+
+        
 
         value-=5;
         description_value--;
