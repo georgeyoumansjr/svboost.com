@@ -76,14 +76,15 @@ def get_description_list_by_each_video(video_list) -> list:
     stopwords = eval(f.read())
 
     for video in video_list:
-        for word in video.description.split(" "):
-            try:
-                word = re.sub('[^a-zA-Z0-9]+', '', word)
-                ###HERE COMES THE STOPWORDS
-                if not word in stopwords:
-                    if word != '':
-                        result.append(word.lower())
-            except:
-                print()
+        if video.description is not None:
+            for word in video.description.split(" "):
+                try:
+                    word = re.sub('[^a-zA-Z0-9]+', '', word)
+                    ###HERE COMES THE STOPWORDS
+                    if not word in stopwords:
+                        if word != '':
+                            result.append(word.lower())
+                except:
+                    print()
 
     return result
