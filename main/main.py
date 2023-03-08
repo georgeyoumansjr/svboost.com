@@ -153,6 +153,7 @@ def login_page():
 @blueprint.route("/contact_page", methods=['GET'])
 def contact_page():
     show = False
+    just_quota = False
     if current_user.is_authenticated:
         user = User.query.get(current_user.id)
         token_amount = user.token_amount
