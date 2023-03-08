@@ -156,10 +156,14 @@ def contact_page():
     if current_user.is_authenticated:
         user = User.query.get(current_user.id)
         token_amount = user.token_amount
-        if token_amount < 5:
+        did_send_review = user.did_send_review
+        if token_amount < 5 and not did_send_review:
             show = True
+        if did_send_review:
+            just_quota = True
+
         
-    return render_template(templates_path+"contact_page.html", show=show)
+    return render_template(templates_path+"contact_page.html", show=show, just_quota=just_quota|False)
 
 
 @blueprint.route("/cart_page", methods=['GET'])
@@ -405,6 +409,7 @@ def save_result():
 
 @blueprint.route("/send_contact", methods=['POST'])
 def send_contact():
+    user = User.query.filter_by(id=current_user.id).first()
     unique_id = str(uuid.uuid1())
     name = request.form.get("name")
     email = request.form.get("email")
@@ -420,11 +425,18 @@ country: {} <br>
 
     try:
         contact = Contact(id=unique_id,name=name,email=email,country=country,subject=subject)
+        if not user.did_send_review:
+            user.token_amount += 25
+        
+        user.did_send_review = True
+        
         db.session.add(contact)
         db.session.commit()
+
         send_confirm_email(msg=msg, tpl="contact_email.html")
     except Exception as e:
         logging.error("Exception on send_contact. {}".format(str(e)))
+        db.session.rollback()
         return redirect(url_for("main.contact_page", message='Error when submitting message'));
     return redirect(url_for("main.contact_page", message='Message submitted with success'));
 

@@ -16,3 +16,5 @@ class User(db.Model, UserMixin):
     urusages = db.relationship('UserResourceUsage', backref='user', lazy=False)
     is_admin = db.Column(db.Boolean, unique=False, nullable=True)
     token_amount = db.Column(db.Integer, nullable=True, default=25)
+    did_send_review = db.Column(db.Boolean, unique=False, nullable=True, default=False)
+    
