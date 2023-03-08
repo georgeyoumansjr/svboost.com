@@ -159,7 +159,7 @@ def contact_page():
         did_send_review = user.did_send_review
         if token_amount < 5 and not did_send_review:
             show = True
-        if did_send_review:
+        elif token_amount < 5 and did_send_review:
             just_quota = True
 
         
