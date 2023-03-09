@@ -69,35 +69,32 @@ def get_description_builder_keywords():
         return 'not enough tokens'
     if 'keyword' in request.args:
         keyword = str(request.args['keyword'])
+        
+        try:
+            emoji = request.args['emoji']
+        except:
+            emoji = False
         try:
             keywords = str(request.args['keywords'])
         except:
             keywords = ''
         try:
+            prompt="give me a video description about "+keyword
             if keywords != '':
-                prompt="Write a video description about "+keyword+ " with these keywords: "+keywords
-                response = openai.ChatCompletion.create(
-                    max_tokens=1000,
-                    temperature=0.9,
-                    model="gpt-3.5-turbo",
-                    messages=[
-                            {"role": "system", "content": "You are my assistant who writes youtube video descriptions."},
-                            {"role": "user", "content": prompt}
-                        ],
-                    n=3,
-                    )
-            else:
-                prompt="Write a video description about "+keyword
-                response = openai.ChatCompletion.create(
-                    max_tokens=1000,
-                    temperature=0.9,
-                    model="gpt-3.5-turbo",
-                    messages=[
-                            {"role": "system", "content": "You are my assistant who writes youtube video descriptions."},
-                            {"role": "user", "content": prompt}
-                        ],
-                    n=3,
-                    )
+                prompt += " with these keywords: "+keywords
+            if emoji:
+                prompt+=" and include some emojies"
+            
+            response = openai.ChatCompletion.create(
+                max_tokens=1000,
+                temperature=0.9,
+                model="gpt-3.5-turbo",
+                messages=[
+                        {"role": "system", "content": "You are my assistant who writes youtube video descriptions."},
+                        {"role": "user", "content": prompt}
+                    ],
+                n=3,
+                )
             # decrease user's tokens
             user.token_amount -= 5
             db.session.commit()

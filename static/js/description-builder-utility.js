@@ -17,6 +17,7 @@ function search_for_keyword_description_builder(){
     */
     var keyword = $("#keyword").val()
     var keywords = $("#keywords").val()
+    var emoji = $("#emoji").val()
     //var checked_language = $("input[type='radio'][name='language']:checked").val();
     var checked_language = "";
 
@@ -36,6 +37,9 @@ function search_for_keyword_description_builder(){
     }
     if( keywords != '' ){
         settings['data']['keywords'] = keywords;
+    }
+    if( emoji ){
+        settings['data']['emoji'] = emoji;
     }
 
 	$('.load-animation').attr("hidden",false);
