@@ -76,7 +76,7 @@ def get_description_builder_keywords():
             prompt="give me a video description about "+keyword
             if keywords != '':
                 prompt += " with these keywords: "+keywords
-            if emoji:
+            if emoji == 'on':
                 prompt += " and include some emojies"
             
             response = openai.ChatCompletion.create(
