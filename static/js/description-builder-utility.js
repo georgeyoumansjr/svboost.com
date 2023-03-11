@@ -32,14 +32,10 @@ function search_for_keyword_description_builder(){
         },
         "data": {
             "keyword": keyword,
+            "keywords":keywords,
+            "emoji":emoji,
             "language": [checked_language]
         }
-    }
-    if( keywords != '' ){
-        settings['data']['keywords'] = keywords;
-    }
-    if( emoji ){
-        settings['data']['emoji'] = emoji;
     }
 
 	$('.load-animation').attr("hidden",false);
