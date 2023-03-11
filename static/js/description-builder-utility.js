@@ -17,7 +17,7 @@ function search_for_keyword_description_builder(){
     */
     var keyword = $("#keyword").val()
     var keywords = $("#keywords").val()
-    var emoji = $("#emoji").val()
+    var emoji = $("#emoji").prop('checked')
     //var checked_language = $("input[type='radio'][name='language']:checked").val();
     var checked_language = "";
 
