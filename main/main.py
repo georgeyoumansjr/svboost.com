@@ -50,62 +50,60 @@ DESCRIPTION_ENDING= []
 # --------------------------------------------
 
 @blueprint.route("/dashboard", methods=['GET'])
-@login_required
 def index():
     user = current_user
-    tag_re = []
-    key_re = []
-    des_re = []
-    buil_re = []
+    if user.is_authenticated:
+        tag_re = []
+        key_re = []
+        des_re = []
+        buil_re = []
+        for res in user.urusages:
+            if "/search-for-tag-report" in res.resource_name:
+                tag_re.append(
+                    {
+                            "name": res.resource_name,
+                            "term": res.term,
+                            "result": res.result,
+                            "search_date": datetime.fromtimestamp(int(res.search_date))
+                        }
+                )
 
-    for res in user.urusages:
-        if "/search-for-tag-report" in res.resource_name:
-           tag_re.append(
-               {
-                    "name": res.resource_name,
-                    "term": res.term,
-                    "result": res.result,
-                    "search_date": datetime.fromtimestamp(int(res.search_date))
-                }
-           )
+            if "/search-by-keyword" in res.resource_name:
+                key_re.append(
+                    {
+                        "name": res.resource_name,
+                        "term": res.term,
+                        "result": res.result,
+                        "search_date": datetime.fromtimestamp(int(res.search_date))
+                    }
+                )
 
-        if "/search-by-keyword" in res.resource_name:
-            key_re.append(
-                {
-                    "name": res.resource_name,
-                    "term": res.term,
-                    "result": res.result,
-                    "search_date": datetime.fromtimestamp(int(res.search_date))
-                }
-            )
+            if "/search-for-description-report" in res.resource_name:
+                des_re.append(
+                    {
+                        "name": res.resource_name,
+                        "term": res.term,
+                        "result": res.result,
+                        "search_date": datetime.fromtimestamp(int(res.search_date))
+                    }
+                )
+            if "/description-checker" in res.resource_name:
+                buil_re.append(
+                    {
+                        "name": res.resource_name,
+                        "term": res.term,
+                        "result": res.result,
+                        "search_date": datetime.fromtimestamp(int(res.search_date))
+                    }
+                )
 
-        if "/search-for-description-report" in res.resource_name:
-            des_re.append(
-                {
-                    "name": res.resource_name,
-                    "term": res.term,
-                    "result": res.result,
-                    "search_date": datetime.fromtimestamp(int(res.search_date))
-                }
-            )
-        if "/description-checker" in res.resource_name:
-            buil_re.append(
-                {
-                    "name": res.resource_name,
-                    "term": res.term,
-                    "result": res.result,
-                    "search_date": datetime.fromtimestamp(int(res.search_date))
-                }
-            )
+            #token_amount = User.query.filter_by(id=current_user.id).first().token_amount
+        return render_template(templates_path+"index.html", username=user.name, tag_re=reverse_filter(tag_re), key_re=reverse_filter(key_re), des_re=reverse_filter(des_re), buil_re=reverse_filter(buil_re), is_home="True")
+    return render_template(templates_path+"index.html", is_home="True")
+    
 
-    if user:
-        token_amount = User.query.filter_by(id=current_user.id).first().token_amount
-        return render_template(templates_path+"index.html", token_amount=token_amount, username=user.name, tag_re=reverse_filter(tag_re), key_re=reverse_filter(key_re), des_re=reverse_filter(des_re), buil_re=reverse_filter(buil_re), is_home="True")
-
-    return ""
 
 @blueprint.route("/search-summary/<term>", methods=['GET'])
-@login_required
 def search_summary(term):
     user = current_user
     terms_re = []
@@ -168,7 +166,6 @@ def contact_page():
 
 
 @blueprint.route("/cart_page", methods=['GET'])
-@login_required
 def cart_page():
     return render_template(templates_path+"cart_page.html")
 
@@ -333,27 +330,22 @@ def new_password_page():
 # --------------------------------------------
 
 @blueprint.route("/search-by-video", methods=['GET'])
-@login_required
 def search_by_video():
     return render_template(templates_path+"search_pages/search-by-video.html")
 
 @blueprint.route("/search-by-keyword", methods=['GET'])
-@login_required
 def search_by_keyword():
     return render_template(templates_path+"search_pages/search-by-keyword.html")
 
 @blueprint.route("/search-for-tag-report", methods=['GET'])
-@login_required
 def search_by_keyword_in_tag():
     return render_template(templates_path+"search_pages/search-for-tag-report.html")
 
 @blueprint.route("/search-for-description-report", methods=['GET'])
-@login_required
 def search_by_keyword_in_description():
     return render_template(templates_path+"search_pages/search-for-description-report.html")
 
 @blueprint.route("/search-by-keyword-scraper", methods=['GET'])
-@login_required
 def search_by_keyword_scraper():
     return render_template(templates_path+"search_pages/search-by-keyword-scraper.html")
 
@@ -536,11 +528,12 @@ def get_guide_status():
     user = current_user
     resource = request.form['resource']
 
-    for res in user.urusages:
-        if resource == res.resource_name and current_user.id == res.user_id:
-            return jsonify({
-                "status": res.showTour,
-            })
+    if user.is_authenticated:
+        for res in user.urusages:
+            if resource == res.resource_name and current_user.id == res.user_id:
+                return jsonify({
+                    "status": res.showTour,
+                })
 
     return jsonify({
         "status": True,

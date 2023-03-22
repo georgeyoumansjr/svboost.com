@@ -30,7 +30,6 @@ templates_path = "report/templates/"
 
 
 @blueprint.route("/get-keyword_research-info",  methods=['GET'])
-@login_required
 def get_keyword_research_info():
     global search_by_keyword_result
 
@@ -44,7 +43,6 @@ def get_keyword_research_info():
         return "missing value in request"
 
 @blueprint.route("/get-tag-report", methods=['GET'])
-@login_required
 def get_tag_report():
     global search_by_keyword_result
 
@@ -113,7 +111,6 @@ def get_description_builder_keywords():
 
 
 @blueprint.route("/get-description-report", methods=['GET'])
-@login_required
 def get_description_report():
     global search_by_keyword_result
 

@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-<html lang="en" class="no-js">
-<head>
+{% extends 'base.html' %}
+{% block head %}
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SmartVidBoost</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/solid.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/extras.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/shepherd.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/SVO_icon2.png') }}" />
 	  <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
     <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
-    <script src="https://js.stripe.com/v3/"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-182398251-16"></script>
   <script>
@@ -24,24 +24,9 @@
   </script>
   <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=6214dfcdb846610019d3dc11&product=sop' async='async'></script>
 
-</head>
-<body class="is-boxed has-animations">
-  <div class="body-wrap">
-    <header class="site-header">
-        <div class="container">
-            <div class="site-header-inner">
-                <div class="brand header-brand full-size-header">
-			              <a href="https://svboost.com">
-				              <img class="logo-landing-page" src="{{ url_for('static', filename='img/SVO_icon2.png') }}" alt="Logo">
-                    </a>
-                </div>
-                <a hidden class="button ml-1" style="background-color: #610207" href="#pricingSection">Pricing</a>
-                <a class="button ml-1" style="background-color: #610207" href="{{ url_for('main.login_page') }}">Log in</a>
-            </div>
-        </div>
-    </header>
+{% endblock %}
 
-    <main>
+{% block content %}
       <section class="hero">
         <div class="container">
           <div class="hero-inner">
@@ -210,8 +195,8 @@
 					</div>
 				</div>
 			</section>
-    </main>
-
+{% endblock %}
+{% block footer %}
     <footer class="site-footer">
       <div class="container">
         <div class="site-footer-inner">
@@ -219,6 +204,7 @@
 						<a href="/">
 							<img width="200px" height="200px" class="logo-landing" src="{{ url_for('static', filename='img/SVO_icon2.png') }}" alt="Logo">
 						</a>
+            <h3 class="text-secondary"> Contact Us : contact@smartdevweb.com </h3>
           </div>
           <!--
           <ul class="footer-social-links list-reset">
@@ -234,50 +220,8 @@
       </div>
       </div>
     </footer>
-  </div>
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <span style="color:black;">You need to login or register first in order to subscribe. <a id="goToLogin" style="color:black;" href="{{ url_for('main.login_page', next=request.url) }}">Login now</a>.</span>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-          </div>
-      </div>
-  </div>
+  {% endblock %}
+  
+ 
 
-  <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/solid.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/payment.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/success.js') }}"></script>
-  <script>
-    window.onload = function () {
-      const params = new URLSearchParams(window.location.search)
-      if (params.has('offer'))
-        document.getElementById(params.get('offer').replace("#", "")).click()
-    }
-  </script>
-  <!--Start of Tawk.to Script-->
-  <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/63e7b5a5c2f1ac1e2032b8fc/1gp0hr3sf';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
-    <!--End of Tawk.to Script-->
-</body>
-</html>
+
