@@ -94,7 +94,9 @@
                         <a class="nav-link nav-color-font" href="{{ url_for('main.my_account') }}"><li class="nav-item">My Account</li></a>
                         <a class="nav-link nav-color-font" id="logout" class="active" href="#"><li class="nav-item">Logout</li></a>
                         {% else %}
+                        {% block login_button %}
                         <a class="nav-link nav-color-font" class="active" href="{{ url_for('main.login_page') }}"><li class="nav-item">Login</li></a>
+                        {% endblock %}
                         {% endif %}
 
                         <!--li class="nav-item"><a class="nav-link nav-color-font" href="{{ url_for('main.cart_page') }}"><i class="fas fa-shopping-cart" style="font-size:20px;"></i></a></li-->
