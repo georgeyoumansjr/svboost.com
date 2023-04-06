@@ -402,7 +402,6 @@ def save_result():
 
 @blueprint.route("/send_contact", methods=['POST'])
 def send_contact():
-    user = User.query.filter_by(id=current_user.id).first()
     unique_id = str(uuid.uuid1())
     name = request.form.get("name")
     email = request.form.get("email")
@@ -418,10 +417,11 @@ country: {} <br>
 
     try:
         contact = Contact(id=unique_id,name=name,email=email,country=country,subject=subject)
-        if not user.did_send_review:
-            user.token_amount += 25
-        
-        user.did_send_review = True
+        if current_user.is_authenticated:
+            user = User.query.filter_by(id=current_user.id).first()
+            if not user.did_send_review:
+                user.token_amount += 25
+                user.did_send_review = True
         
         db.session.add(contact)
         db.session.commit()
