@@ -297,6 +297,11 @@ footer{
     .btn-light {
       width: 100%;
     }
+
+    #video {
+      height: 300px;
+      width: 150px;
+    }
     .content-wrapper {
         margin-left: 0px;
         margin-right: 0px;

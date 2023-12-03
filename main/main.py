@@ -13,6 +13,7 @@ import uuid
 from db.contact import Contact
 from db.db import db
 from db.user import User
+from db.token_offers import TokenOffers
 import hashlib
 from .email_utility import create_message
 from .email_utility import get_stored_credential
@@ -49,61 +50,60 @@ DESCRIPTION_ENDING= []
 # --------------------------------------------
 
 @blueprint.route("/dashboard", methods=['GET'])
-@login_required
 def index():
     user = current_user
-    tag_re = []
-    key_re = []
-    des_re = []
-    buil_re = []
+    if user.is_authenticated:
+        tag_re = []
+        key_re = []
+        des_re = []
+        buil_re = []
+        for res in user.urusages:
+            if "/search-for-tag-report" in res.resource_name:
+                tag_re.append(
+                    {
+                            "name": res.resource_name,
+                            "term": res.term,
+                            "result": res.result,
+                            "search_date": datetime.fromtimestamp(int(res.search_date))
+                        }
+                )
 
-    for res in user.urusages:
-        if "/search-for-tag-report" in res.resource_name:
-           tag_re.append(
-               {
-                    "name": res.resource_name,
-                    "term": res.term,
-                    "result": res.result,
-                    "search_date": datetime.fromtimestamp(int(res.search_date))
-                }
-           )
+            if "/search-by-keyword" in res.resource_name:
+                key_re.append(
+                    {
+                        "name": res.resource_name,
+                        "term": res.term,
+                        "result": res.result,
+                        "search_date": datetime.fromtimestamp(int(res.search_date))
+                    }
+                )
 
-        if "/search-by-keyword" in res.resource_name:
-            key_re.append(
-                {
-                    "name": res.resource_name,
-                    "term": res.term,
-                    "result": res.result,
-                    "search_date": datetime.fromtimestamp(int(res.search_date))
-                }
-            )
+            if "/search-for-description-report" in res.resource_name:
+                des_re.append(
+                    {
+                        "name": res.resource_name,
+                        "term": res.term,
+                        "result": res.result,
+                        "search_date": datetime.fromtimestamp(int(res.search_date))
+                    }
+                )
+            if "/description-checker" in res.resource_name:
+                buil_re.append(
+                    {
+                        "name": res.resource_name,
+                        "term": res.term,
+                        "result": res.result,
+                        "search_date": datetime.fromtimestamp(int(res.search_date))
+                    }
+                )
 
-        if "/search-for-description-report" in res.resource_name:
-            des_re.append(
-                {
-                    "name": res.resource_name,
-                    "term": res.term,
-                    "result": res.result,
-                    "search_date": datetime.fromtimestamp(int(res.search_date))
-                }
-            )
-        if "/description-checker" in res.resource_name:
-            buil_re.append(
-                {
-                    "name": res.resource_name,
-                    "term": res.term,
-                    "result": res.result,
-                    "search_date": datetime.fromtimestamp(int(res.search_date))
-                }
-            )
-
-    if user:
+            #token_amount = User.query.filter_by(id=current_user.id).first().token_amount
         return render_template(templates_path+"index.html", username=user.name, tag_re=reverse_filter(tag_re), key_re=reverse_filter(key_re), des_re=reverse_filter(des_re), buil_re=reverse_filter(buil_re), is_home="True")
+    return render_template(templates_path+"index.html", is_home="True")
+    
 
-    return ""
 
 @blueprint.route("/search-summary/<term>", methods=['GET'])
-@login_required
 def search_summary(term):
     user = current_user
     terms_re = []
@@ -133,6 +133,7 @@ def user_is_authorized():
 
 @blueprint.route("/", methods=['GET'])
 def landing_page():
+    
     return render_template("landing_page.html")
 
 @blueprint.route("/register", methods=['GET'])
@@ -141,23 +142,45 @@ def register_page():
 
 @blueprint.route("/login-page", methods=['GET'])
 def login_page():
+    if current_user.is_authenticated:
+        return redirect('/dashboard')
     return render_template(templates_path+"login_page.html")
     #arr = []
     #print(arr["index"])
 
 @blueprint.route("/contact_page", methods=['GET'])
 def contact_page():
-    return render_template(templates_path+"contact_page.html")
+    show = False
+    just_quota = False
+    if current_user.is_authenticated:
+        user = User.query.get(current_user.id)
+        token_amount = user.token_amount
+        did_send_review = user.did_send_review
+        if token_amount < 5 and not did_send_review:
+            show = True
+        elif token_amount < 5 and did_send_review:
+            just_quota = True
+
+        
+    return render_template(templates_path+"contact_page.html", show=show, just_quota=just_quota|False)
 
 
 @blueprint.route("/cart_page", methods=['GET'])
-@login_required
 def cart_page():
     return render_template(templates_path+"cart_page.html")
 
 @blueprint.route("/pricing_page", methods=['GET'])
 def pricing_page():
-    return render_template(templates_path+"pricing_page.html")
+    offers = TokenOffers.query.all()
+    context = []
+    for offer in offers:
+        context.append(offer)
+
+
+    return render_template(templates_path+"pricing_page.html", offers=context)
+@blueprint.route("/pricing_page/info", methods=['GET'])
+def info():
+    return render_template(templates_path+'info.html')
 
 
 # --------------------------------------------
@@ -206,11 +229,10 @@ def my_account():
         "name": current_user.name,
         "email": current_user.email
     }
-
-    if current_user.password != 'None':
-        return render_template(templates_path+"my_account.html", user=user, editpass='True', message=message)
+    if current_user.password != None:
+        return render_template(templates_path+"my_account.html", user=user, editpass=True, message=message)
     else:
-        return render_template(templates_path+"my_account.html", user=user, editpass='False', message=messages)
+        return render_template(templates_path+"my_account.html", user=user, editpass=False, message=message)
 
 @blueprint.route("/update-my-information", methods=['POST'])
 @login_required
@@ -218,49 +240,67 @@ def update_my_information():
     message = 'update with success'
     name = request.form.get("name")
     email = request.form.get("email")
+    user = User.query.filter_by(id=current_user.id).first()
     password = request.form.get("password")
-    print(">>> Current password hash {}".format(password))
+    if password:
+        print(">>> Current password hash {}".format(password))
 
-    newpassword = request.form.get("newpassword")
-    repeatpassword = request.form.get("repeatpassword")
+        newpassword = request.form.get("newpassword")
+        repeatpassword = request.form.get("repeatpassword")
 
-    try:
 
-        user = User.query.filter_by(id=current_user.id).first()
-        if user:
+        try:
+
+            if user:
+                user.name = name
+                user.email = email
+                print(">>> Current password hash {}".format(password))
+                if password != "":
+
+                    md5_obj = hashlib.md5(password.encode())
+                    password = md5_obj.hexdigest()
+
+                    if password == user.password:
+                        if newpassword == repeatpassword:
+                            md5_obj = hashlib.md5(newpassword.encode())
+                            newpassword = md5_obj.hexdigest()
+                            user.password = newpassword
+                            print(user.password)
+                    else:
+                        message = 'current password incorrect'
+                db.session.commit()
+                user = {
+                    'name' : current_user.name,
+                    'email' : current_user.email
+                }
+                return redirect(url_for("main.my_account",  user=user, message=message))
+            else:
+                return redirect(url_for("main.my_account", message='problem updating the information', user=user))
+        except Exception as e:
+            logging.error("Exception on update_my_information. {}".format(str(e)))
+            return redirect(url_for("main.my_account", message='problem updating the information', user=user))
+    else:
+        try:
             user.name = name
             user.email = email
-            print(">>> Current password hash {}".format(password))
-            if password != "":
-
-                md5_obj = hashlib.md5(password.encode())
-                password = md5_obj.hexdigest()
-
-                if password == user.password:
-                    if newpassword == repeatpassword:
-                        md5_obj = hashlib.md5(newpassword.encode())
-                        newpassword = md5_obj.hexdigest()
-                        user.password = newpassword
-                        print(user.password)
-                else:
-                    message = 'current password incorrect'
             db.session.commit()
             user = {
                 'name' : current_user.name,
                 'email' : current_user.email
             }
             return redirect(url_for("main.my_account",  user=user, message=message))
-        else:
+        except Exception as e:
+            logging.error("Exception on update_my_information. {}".format(str(e)))
             return redirect(url_for("main.my_account", message='problem updating the information', user=user))
-    except Exception as e:
-        logging.error("Exception on update_my_information. {}".format(str(e)))
-        return redirect(url_for("main.my_account", message='problem updating the information', user=user))
+    
 
 
-@blueprint.route("/payment_method", methods=['GET'])
+@blueprint.route("/payment_method/<id>", methods=['GET'])
 @login_required
-def payment_method():
-    return render_template(templates_path+"payment_method.html")
+def payment_method(id):
+    user = User.query.filter_by(id=current_user.id).first()
+    offer = TokenOffers.query.filter_by(id=id).first()
+    return render_template(templates_path+"payment_method.html", user=user, offer=offer)
 
 @blueprint.route("/purchase_details", methods=['GET'])
 def purchase_details():
@@ -290,27 +330,22 @@ def new_password_page():
 # --------------------------------------------
 
 @blueprint.route("/search-by-video", methods=['GET'])
-@login_required
 def search_by_video():
     return render_template(templates_path+"search_pages/search-by-video.html")
 
 @blueprint.route("/search-by-keyword", methods=['GET'])
-@login_required
 def search_by_keyword():
     return render_template(templates_path+"search_pages/search-by-keyword.html")
 
 @blueprint.route("/search-for-tag-report", methods=['GET'])
-@login_required
 def search_by_keyword_in_tag():
     return render_template(templates_path+"search_pages/search-for-tag-report.html")
 
 @blueprint.route("/search-for-description-report", methods=['GET'])
-@login_required
 def search_by_keyword_in_description():
     return render_template(templates_path+"search_pages/search-for-description-report.html")
 
 @blueprint.route("/search-by-keyword-scraper", methods=['GET'])
-@login_required
 def search_by_keyword_scraper():
     return render_template(templates_path+"search_pages/search-by-keyword-scraper.html")
 
@@ -318,10 +353,29 @@ def search_by_keyword_scraper():
 # ----------------- CHECKER ------------------
 # --------------------------------------------
 
+@blueprint.route("/how-many-tokens", methods=['GET'])
+@login_required
+def how_many_tokens():
+    user = User.query.filter_by(id=current_user.id).first()
+    return jsonify({'tokens':user.token_amount})
+
+@blueprint.route("/not-enough-tokens", methods=['GET'])
+@login_required
+def not_enough_tokens():
+    user = User.query.filter_by(id=current_user.id).first()
+    return render_template(templates_path+"/not_enough_tokens.html")
+
+from flask import flash
 @blueprint.route("/description-checker", methods=['GET'])
 @login_required
 def description_builder():
-    return render_template(templates_path+"/description_builder/description-builder.html")
+    user = User.query.filter_by(id=current_user.id).first()
+    if user.token_amount == None or user.token_amount < 5:
+        flash(f"User with email {user.email} ran out of tokens.",'error')
+        return redirect('/contact_page')
+    token_amount = user.token_amount
+    description_amount = int(token_amount/5)
+    return render_template(templates_path+"/description_builder/description-builder.html", token_amount=token_amount, description_amount=description_amount)
 
 @blueprint.route("/save-result", methods=['POST'])
 @login_required
@@ -363,11 +417,19 @@ country: {} <br>
 
     try:
         contact = Contact(id=unique_id,name=name,email=email,country=country,subject=subject)
+        if current_user.is_authenticated:
+            user = User.query.filter_by(id=current_user.id).first()
+            if not user.did_send_review:
+                user.token_amount += 25
+                user.did_send_review = True
+        
         db.session.add(contact)
         db.session.commit()
+
         send_confirm_email(msg=msg, tpl="contact_email.html")
     except Exception as e:
         logging.error("Exception on send_contact. {}".format(str(e)))
+        db.session.rollback()
         return redirect(url_for("main.contact_page", message='Error when submitting message'));
     return redirect(url_for("main.contact_page", message='Message submitted with success'));
 
@@ -466,11 +528,12 @@ def get_guide_status():
     user = current_user
     resource = request.form['resource']
 
-    for res in user.urusages:
-        if resource == res.resource_name and current_user.id == res.user_id:
-            return jsonify({
-                "status": res.showTour,
-            })
+    if user.is_authenticated:
+        for res in user.urusages:
+            if resource == res.resource_name and current_user.id == res.user_id:
+                return jsonify({
+                    "status": res.showTour,
+                })
 
     return jsonify({
         "status": True,

@@ -142,6 +142,8 @@ function search_by_keyword(){
         }
     }
 
+    var word = 'You can use these suggested keywords in <a style="color:blue;" href="/search-for-description-report">OUR KEYWORD SEARCH FEATURE</a> to generate the top keywords that can be used to optimize your YouTube description';
+    
 	showResult()
     $.ajax(settings).done(function (response) {
         $("#spinner").hide();
@@ -149,7 +151,7 @@ function search_by_keyword(){
         $(".result").empty();
         $(".result").show();
         $('#searchLoading').attr("hidden",true);
-        var list = to_list_template_new(response)
+        var list = to_list_template_new(response,word)
         $(".result").append('<div>'+list+'</div>');
         renderTag();
     })
@@ -174,15 +176,16 @@ function search_by_keyword_scraper(){
             "keyword": keyword
         }
     }
+    
+    var word = 'keywords';
 
 	showResult()
     $.ajax(settings).done(function (response) {
         $("#spinner").hide();
-        console.log(response)
         $(".result").empty();
         $(".result").show();
         $('#searchLoading').attr("hidden",true);
-        var list = to_list_template_new(response)
+        var list = to_list_template_new(response,word)
         $(".result").append('<div>'+list+'</div>');
         renderTag();
     })
@@ -210,6 +213,8 @@ function search_for_tag_report(){
         }
     }
 
+    var word = "These are the most used tags associated with your keyword. You can copy to a notepad and use these tags in your video's description";
+
 	showResult()
     $.ajax(settings).done(function (response) {
         $("#spinner").hide();
@@ -218,7 +223,7 @@ function search_for_tag_report(){
         $(".result").empty();
         $(".result").show();
         $('#searchLoading').attr("hidden",true);
-        var list = to_list_template_new(response)
+        var list = to_list_template_new(response,word)
         $(".result").append('<div>'+list+'</div>');
         renderTag();
     })
@@ -226,8 +231,8 @@ function search_for_tag_report(){
 
 function search_for_description_report(){
 	$("#tipBody").text("By using this feature, you can find keywords that most occur top video's descriptions.")
-
     var keyword = $("#keyword").val()
+    sessionStorage.setItem("keyword", keyword);
     $("#spinner").show();
     $( ".result" ).hide();
     $( "#wait_time" ).hide();
@@ -246,6 +251,8 @@ function search_for_description_report(){
         }
     }
 
+    var word = 'Please remove the keywords that you feel are not relevant';   
+
 	showResult();
     $.ajax(settings).done(function (response) {
         $("#spinner").hide();
@@ -253,8 +260,9 @@ function search_for_description_report(){
         $(".result").empty();
         $(".result").show();
         $('#searchLoading').attr("hidden",true);
-        var content = to_list_template_new(response)
-        $(".result").append('<div>' + content + '</div>');
+        var content = to_list_template_new(response,word)
+        
+        $(".result").append( '<div>' + content + '<button id="ai_page_button" class="btnbuild" onclick="go_to_ai_page()">Click Here to Write a Description Using These Keywords with AI</button>' + '</div>');
         renderTag();
     })
 }
@@ -344,6 +352,7 @@ function to_list_template(data) {
     return ol;
 }
 */
+
 function to_list_template_new(data) {
     var div = '<div id="tocopy" class="simple-tags" data-simple-tags="';
     var items = '';
@@ -352,8 +361,24 @@ function to_list_template_new(data) {
 		items += item + ',';
     });
 
-	div += items.slice(0, -1) + '">  </div> <button class="btnbuild" onclick="copyToClipboard()">Copy</button>';
+	div += items.slice(0, -1) + '"> </div> <button class="btnbuild" onclick="copyToClipboard()">Copy</button>';
     return div;
+}
+
+function go_to_ai_page(){
+    div = document.getElementById('tocopy')
+	var txt = '';
+    
+	var list = div.getElementsByTagName("li");
+    
+    for (i=0; i<list.length; i++){
+        li = list[i];
+        txt += (li.textContent || li.innerText) + ', ';
+    }
+	
+    
+    sessionStorage.setItem("content", txt);
+    window.location.href = '/description-checker';
 }
 
 function renderTag () {
@@ -412,40 +437,42 @@ $(".search form input").keypress(function(event){
 function copyToClipboard(elm) {
 	/* Get the text field */
 	//var elm = document.getElementById(elm_name);
-	var newEl = document.createElement("textarea");
+	//var newEl = document.createElement("textarea");
 	var txt = '';
+    var display_message = '';
+    try{
+        var list = elm.getElementsByTagName("li");
 
-	var list = elm.getElementsByTagName("li");
+        if (list.length > 0) {
+            for (i=0; i<list.length; i++){
+                li = list[i];
+                txt += (li.textContent || li.innerText) + ', ';
+            }
+            txt = txt.slice(0, -2);
+            
+        } else {
+            elm.focus();
+            elm.select();
+        }
+    }catch(error){
+        display_message = elm.id.slice(-1);
+        txt = elm.innerText;
+    }
+    navigator.clipboard.writeText(txt)
+    .then(function() {
+        $("#displayMessage"+display_message).empty();
+        $("#displayMessage"+display_message).append("Copied content to clipboard");
+        setTimeout(function () {  $("#displayMessage"+display_message).attr("hidden",false); }, 100);
+        setTimeout(function () {  $("#displayMessage"+display_message).attr("hidden",true); }, 4000);
 
-	if (list.length > 0) {
-		for (i=0; i<list.length; i++){
-			li = list[i];
-			txt += (li.textContent || li.innerText) + ', ';
-		}
-		newEl.value = txt.slice(0, -2);
-		newEl.type = "hidden";
-		document.body.appendChild(newEl);
-		newEl.focus();
-	    newEl.select();
-	} else {
-		elm.focus();
-        elm.select();
-	}
-
-	try {
-		var successful = document.execCommand('copy');
-		document.body.removeChild(newEl);
-		$("#displayMessage").empty();
-		$("#displayMessage").append("Copied content to clipboard");
-        setTimeout(function () {  $("#displayMessage").attr("hidden",false); }, 100);
-        setTimeout(function () {  $("#displayMessage").attr("hidden",true); }, 4000);
-	} catch (err) {
-		document.body.removeChild(newEl);
-		$("#displayMessage").empty();
-		$("#displayMessage").append("Failed to copy content to clipboard");
-        setTimeout(function () {  $("#displayMessage").attr("hidden",false); }, 100);
-        setTimeout(function () {  $("#displayMessage").attr("hidden",true); }, 4000);
-	}
+    })
+    .catch(function() {
+        console.error('Failed to copy text to clipboard');
+        $("#displayMessage"+display_message).empty();
+        $("#displayMessage"+display_message).append("Failed to copy content to clipboard");
+        setTimeout(function () {  $("#displayMessage"+display_message).attr("hidden",false); }, 100);
+        setTimeout(function () {  $("#displayMessage"+display_message).attr("hidden",true); }, 4000);
+    });
 
 }
 function validate(event) {
@@ -503,8 +530,9 @@ function getShowTour(resource){
     return $.ajax(settings)
 }
 
-function to_list_template_new(data) {
-    var div = '<div><p style="margin-left:20px;"> <strong> <em> These suggestions may help your videos rank higher on YouTube search. <strong><a href="#" onclick="raiseTipsModal(event)">See more ></a></strong></em> </strong></p></div>' +
+function to_list_template_new(data, text) {
+    var div = '<div><p style="margin-left:20px;"> <strong> <em> These suggestions may help your videos rank higher on YouTube search. <strong><a href="#" onclick="raiseTipsModal(event)">See more ></a></strong></em> </strong></p>'+
+    '<p style="margin-left:20px;">'+text+'.</p>'+'</div>' +
     '<div id="tocopy" class="simple-tags" data-simple-tags="';
     var items = '';
 

@@ -15,6 +15,7 @@
 {% block content %}
 <div class="container login-container">
     <div class="row justify-content-center">
+
         <div class="col-md-6 login-form-2">
             <div  class="alert alert-secondary text-center" role="alert" id="message" hidden>
                 <!--FLASH MESSAGES-->
@@ -287,6 +288,29 @@
             </form>
             <!-- ShareThis BEGIN --><div class="sharethis-inline-follow-buttons"></div><!-- ShareThis END -->
         </div>
+        {% if show %}
+        <div class="ml-1 col-sm-5 ">
+            <div class="row p-3 bg-light">
+                <p>Dear Valued User, <br>
+Your quota for free descriptions from our AI tool has ended. <br>
+To continue using it, provide us feedback through the linked form. This will provide you some additional free descriptions.  <br>
+Your input is critical in helping us improve the tool. <br>
+Thank you for your support.</p>
+            </div>
+        </div>
+        {% elif just_quota %}
+        <div class="ml-1 col-sm-5 ">
+            <div class="row p-3 bg-light">
+                <p>Dear Valued User, <br>
+Your quota for free descriptions from our AI tool has ended. <br>
+To continue using it, provide us feedback through the linked form. <br>
+Our team will review your feedback and provide additional free descriptions. <br>
+Your input is critical in helping us improve the tool. <br>
+Thank you for your support.</p>
+            </div>
+        </div>
+        {% else %}
+        {% endif %}
     </div>
 </div>
 

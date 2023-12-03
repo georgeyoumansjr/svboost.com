@@ -4,3 +4,8 @@ PassengerBaseURI "/"
 PassengerPython "/home/tnhlabsc/virtualenv/svboost.com/3.9/bin/python"
 PassengerAppLogFile "/home/tnhlabsc/log/svboost.log"
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+RewriteOptions inherit
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END

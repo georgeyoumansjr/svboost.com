@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-<html lang="en" class="no-js">
-<head>
+{% extends 'base.html' %}
+{% block head %}
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SmartVidBoost</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/solid.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/extras.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/shepherd.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/SVO_icon2.png') }}" />
 	  <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
     <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
-    <script src="https://js.stripe.com/v3/"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-182398251-16"></script>
   <script>
@@ -24,33 +24,23 @@
   </script>
   <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=6214dfcdb846610019d3dc11&product=sop' async='async'></script>
 
-</head>
-<body class="is-boxed has-animations">
-  <div class="body-wrap">
-    <header class="site-header">
-        <div class="container">
-            <div class="site-header-inner">
-                <div class="brand header-brand full-size-header">
-			              <a href="https://svboost.com">
-				              <img class="logo-landing-page" src="{{ url_for('static', filename='img/SVO_icon2.png') }}" alt="Logo">
-                    </a>
-                </div>
-                <a hidden class="button ml-1" style="background-color: #610207" href="#pricingSection">Pricing</a>
-                <a class="button ml-1" style="background-color: #610207" href="{{ url_for('main.login_page') }}">Log in</a>
-            </div>
-        </div>
-    </header>
+{% endblock %}
 
-    <main>
+{% block login_button %}{% endblock %}
+
+{% block content %}
       <section class="hero">
         <div class="container">
           <div class="hero-inner">
   					<div class="hero-copy">
-              <h1 class="hero-title mt-0 ml-header">SmartVidBoost</h1>
+              <h1 class="hero-title mt-0 ml-header">🚀 Boost your Youtube 📹 views for FREE with our 🤖 AI-powered tool!
+
+              </h1>
                 <div class="hero-cta"><a class="button button-primary" href="{{ url_for('main.login_page') }}">Subscribe now for free</a><a class="button" href="{{ url_for('main.contact_page') }}">Get in touch</a></div>
 				    </div>
 				    <div class="hero-figure anime-element">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/eGgf9aAidpM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                
+                <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/sjjNMZtY3dY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 				    </div>
           </div>
         </div>
@@ -58,21 +48,34 @@
 
       <section class="features section">
         <div class="container">
-	        <div class="features-inner section-inner has-bottom-divider">
+          <div class="features-wrap" style="max-width: auto;">
+            <div class="text-center" style="max-width: auto; margin: 50px 30px;">
+                  <p class="text-sm">
+                    If you're looking to create a YouTube video that stands out and reaches a wider audience, optimizing your video description with relevant keywords is essential.
+                  </p>
+                  <p class="text-sm">
+                    However, identifying the right keywords and incorporating them into your description can be a time-consuming and challenging process. This is where Svboost comes in. With just two clicks, Svboost can help you create a highly effective and optimized video description that includes the most relevant keywords for your content. Our advanced algorithms and technology make it easy to quickly identify the right keywords and create a description that is both informative and engaging. With Svboost, you can save time and effort while maximizing the potential for success of your YouTube video.
+                  </p>
+                  <p class="text-sm">
+                    With Svboost, you can save time and effort while maximizing the potential for success of your YouTube video.
+                  </p>
+            </div>
+            </div>
+            <!--
             <div class="">
-              <p class="section-paragraph mb-0 text-center">The SmartVidBoost is an ABSOLUTELY FREE  keyword optimization tool for your YouTube videos which will help you increase the quantity and quality of traffic to your online content so it will be shown as a top result for searches of a certain keyword. See all the features below you can get with the SmartVidBoost.</p>
+              <p class="section-paragraph mb-0 text-center">The SmartVidBoost is an keyword optimization tool for your YouTube videos which will help you increase the quantity and quality of traffic to your online content so it will be shown as a top result for searches of a certain keyword. See all the features below you can get with the SmartVidBoost.</p>
             </div>
             <div class="features-wrap">
               <div class="feature text-center is-revealing">
                 <div class="feature-inner">
-                  <h4 class="feature-title mt-24">Search Trending Suggested Keywords</h4>
+                  <h4 class="feature-title mt-24">Identify Video Ideas Based on Trending Topics</h4>
                   <p class="text-sm mb-0">This feature helps you find the top topics in your niche that are trending and people are excited about.</p>
                 </div>
               </div>
               <div class="feature text-center is-revealing">
                 <div class="feature-inner">
-                  <h4 class="feature-title mt-24">Search Trending Description Keywords</h4>
-                  <p class="text-sm mb-0">This feature searches for top trending keywords from the description section related to your search terms.</p>
+                  <h4 class="feature-title mt-24">Search Trending Keywords</h4>
+                  <p class="text-sm mb-0">This feature searches for top trending keywords from YouTube related to your search terms.</p>
                 </div>
               </div>
               <div class="feature text-center is-revealing">
@@ -83,12 +86,13 @@
               </div>
               <div class="feature text-center is-revealing">
                 <div class="feature-inner">
-                  <h4 class="feature-title mt-24">Description Checker</h4>
-                  <p class="text-sm mb-0">This feature aids in building your YouTube description details. This feature will give out tips you can use to rank better on the YouTube algorithm.</p>
+                  <h4 class="feature-title mt-24">AI Description Writer</h4>
+                  <p class="text-sm mb-0">This feature will simplify the process of writing your YouTube descriptions using AI.</p>
                 </div>
               </div>
             </div>
           </div>
+        -->
         </div>
       </section>
 
@@ -138,16 +142,16 @@
                     <div class="pricing-table-features-title text-xs pt-24 pb-24">You will get FULL ACCESS on</div>
                     <ul class="pricing-table-features list-reset text-xs">
                       <li>
+                        <span>Keyword Suggestion Search</span>
+                      </li>
+                      <li>
                         <span>Tag Search</span>
                       </li>
                       <li>
                         <span>Description Search</span>
                       </li>
                       <li>
-                        <span>Keyword Suggestion Search</span>
-                      </li>
-                      <li>
-                        <span>Description Checker</span>
+                        <span>AI Description Writer</span>
                       </li>
                       <li>
                         <span>All saved searches and descriptions</span>
@@ -186,74 +190,40 @@
 				<div class="container">
 					<div class="cta-inner section-inner">
 						<h3 class="section-title mt-0">Still not convinced?</h3>
+						<h3 class="section-title mt-0">How about you decide after you try our app?</h3>
 						<div class="cta-cta">
-							<a class="button button-primary button-wide-mobile" href="{{ url_for('main.contact_page') }}">Get in touch</a>
+							<a class="button button-primary button-wide-mobile" href="{{ url_for('main.login_page') }}">Try Now</a>
 						</div>
 					</div>
 				</div>
 			</section>
-    </main>
-
+{% endblock %}
+{% block footer %}
     <footer class="site-footer">
       <div class="container">
         <div class="site-footer-inner">
           <div class="brand footer-brand">
-						<a href="#">
-							<img class="logo-landing-page" src="{{ url_for('static', filename='img/SVO_icon2.png') }}" alt="Logo">
+						<a href="/">
+							<img width="200px" height="200px" class="logo-landing" src="{{ url_for('static', filename='img/SVO_icon2.png') }}" alt="Logo">
 						</a>
+            <h3 class="text-secondary"> Contact Us : contact@smartdevweb.com </h3>
           </div>
-          <ul class="footer-links list-reset">
-            <li>
-              <a href="#">Contact</a>
-            </li>
-            <li>
-              <a href="#">About us</a>
-            </li>
-            <li>
-              <a href="#">FAQ's</a>
-            </li>
-            <li>
-              <a href="#">Support</a>
-            </li>
-          </ul>
+          <!--
           <ul class="footer-social-links list-reset">
-              <!-- ShareThis BEGIN --><div class="sharethis-inline-follow-buttons"></div><!-- ShareThis END -->
+              <div class="sharethis-inline-follow-buttons"></div>
           </ul>
-          <div class="footer-copyright">&copy; 2019 Solid, all rights reserved</div>
+          -->
         </div>
+        <div class="copyright text-center">
+          Copyright &copy; 2023 - All Rights Reserved
+          <br>
+          <a href="{{ url_for('main.terms_of_service') }}">Terms of Service</a> |
+          <a href="{{ url_for('main.privacy_policy') }}">Privacy Policy</a>
+      </div>
       </div>
     </footer>
-  </div>
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <span style="color:black;">You need to login or register first in order to subscribe. <a id="goToLogin" style="color:black;" href="{{ url_for('main.login_page', next=request.url) }}">Login now</a>.</span>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-          </div>
-      </div>
-  </div>
+  {% endblock %}
+  
+ 
 
-  <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/solid.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/payment.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/success.js') }}"></script>
-  <script>
-    window.onload = function () {
-      const params = new URLSearchParams(window.location.search)
-      if (params.has('offer'))
-        document.getElementById(params.get('offer').replace("#", "")).click()
-    }
-  </script>
-</body>
-</html>
+

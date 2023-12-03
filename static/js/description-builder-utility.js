@@ -1,9 +1,23 @@
+function get_session_storage(){
+
+    var keyword = sessionStorage.getItem('keyword');
+    var keywords = sessionStorage.getItem('content');
+    if(keyword && keywords){
+        $("#keyword").val(keyword)
+
+        $("#keywords").val(keywords)
+    }
+        
+}
 function search_for_keyword_description_builder(){
+    /*
 	$("#tipBody").text("This tool helps you to build your YouTube video description. Just key in your topic, " +
 	"hit search and top keyword suggestions will fill up the suggestion box. Optimize these keywords to your linking " +
 	"and the remaining ones will be used to guide you on how to build your video description.")
-
+    */
     var keyword = $("#keyword").val()
+    var keywords = $("#keywords").val()
+    var emoji = $("#emoji").prop('checked')
     //var checked_language = $("input[type='radio'][name='language']:checked").val();
     var checked_language = "";
 
@@ -18,30 +32,63 @@ function search_for_keyword_description_builder(){
         },
         "data": {
             "keyword": keyword,
+            "keywords":keywords,
+            "emoji":emoji,
             "language": [checked_language]
         }
     }
 
 	$('.load-animation').attr("hidden",false);
     $.ajax(settings).done(function (response) {
+        if( response == 'error' ){
+            return
+        }
+        if( response == 'not enough tokens'){
+            return window.location = 'contact_page'
+        }
+
         $(".result").empty();
         $("#spinner").hide();
         $(".result").show();
 
-        re = response.slice(0, 6 + 1);
+        const token_amount = document.querySelector('#token_amount');
+        const description_amount = document.querySelector('#description_amount');
 
+        let value = parseInt(token_amount.textContent);
+        let description_value = parseInt(description_amount.textContent);
+
+        
+
+        value-=5;
+        description_value--;
+
+        token_amount.textContent = value.toString();
+        description_amount.textContent = description_value.toString();
+        
+        
+        //re = response.slice(0, 6 + 1);
         var list = [];
-        if (response.length > 10){
-            list = to_list_template_new(re)
-        } else {
-            list = to_list_template_new(re)
-        }
+        //console.log(response);
+        try{
+            //list = to_list_template_new(response);
+            for(i=1;i<4;i++) {
 
-        $(".result").append(
-        '<div>'
-        +list
-        +'</div>'
-        );
+                desc = '<div> Your Description: </div>'
+                +'<div id="'+'tocopy'+i.toString()+'" style=" border: 1px solid gray; padding: 5px; background-color: white; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); ">'+response[i]+
+                '</div> <button class="btnbuild" onclick="copyToClipboard('+'tocopy'+i.toString()+')">Copy</button>'+
+                '<div hidden class="alert alert-secondary mt-2" role="alert" id="displayMessage'+i.toString()+'"></div>';
+            
+                $(".result").append(
+                '<div>'
+                +desc
+                +'</div>'
+                );
+            }
+           //
+        }catch(error){
+            //list = response;
+            console.error(error)
+        };
 		renderTag();
     })
 }

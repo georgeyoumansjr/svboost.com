@@ -1,0 +1,58 @@
+{% extends 'blog-base.html' %}
+{% block other %}
+
+<div class="inner-blog mt-4 mx-4 p-4 bg-light text-dark ">
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <h1 class="hero-title mt-0 ml-header">Build your Youtube Description with Optimized Keywords with 2-clicks</h1>
+      </div>
+      <div class="hero-figure anime-element text-center">
+        <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/sjjNMZtY3dY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+
+{% endblock %}
+
+{% block inner_content %}
+<div class="inner-blog mt-4 mx-4 p-4 bg-light text-dark ">
+<br>
+<div class="row">
+  <div class="jumbotron" style="width: 100%;">
+        <h4 class="text-primary">Blogs</h4>
+        <p class="lead d-none d-sm-block">Pick One and Learn More</p>
+        <hr class="my-3" />
+        
+        {% if blogs %}
+        <div class="card-columns">
+        {% for blog in blogs %}
+          <div class="col-md-6 col-md-offset-3">
+                <div class="well well-sm">
+                    <div class="row-md-3">
+                        <div class="card" style="width: 18rem;">
+                          <img class="card-img-top" src="{{ url_for('static', filename='blog/'+blog.title+'/image-0.png' ) }}" alt="">
+                          <div class="card-body">
+                            <h5 class="card-title">{{blog.title.replace('-',' ')}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{blog.publish_date}}</h6>
+                            <p class="card-text">{{blog.text}}</p>
+                            <a href="blog/{{blog.title}}" class="btn btn-primary">Read More --></a>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  {% else %}
+                  <p> Nothing to see...</p>             
+                  {% endif %}
+                </div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
