@@ -29,18 +29,19 @@
 {% block login_button %}{% endblock %}
 
 {% block content %}
-      <section class="hero">
+      <section class="hero main-hero-section">
         <div class="container">
           <div class="hero-inner">
   					<div class="hero-copy">
-              <h1 class="hero-title mt-0 ml-header">🚀 Boost your Youtube 📹 views for FREE with our 🤖 AI-powered tool!
-
-              </h1>
-                <div class="hero-cta"><a class="button button-primary" href="{{ url_for('main.login_page') }}">Subscribe now for free</a><a class="button" href="{{ url_for('main.contact_page') }}">Get in touch</a></div>
+              <h1 class="hero-title mt-0 ml-header">🚀 Boost your Youtube 📹 views for FREE with our 🤖 AI-powered tool!</h1>
+                <div class="hero-cta">
+                  <a class="universal-btn" href="{{ url_for('main.login_page') }}">Subscribe now for free</a>
+                  <a class="universal-outline-btn" href="{{ url_for('main.contact_page') }}">Get in touch</a>
+                </div>
 				    </div>
 				    <div class="hero-figure anime-element">
                 
-                <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/sjjNMZtY3dY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe id="video" width="530" height="315" src="https://www.youtube.com/embed/sjjNMZtY3dY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 				    </div>
           </div>
         </div>
@@ -186,27 +187,49 @@
         </div>
       </section>
 
-			<section class="cta section">
+			<section class="cta section custom-cta-section">
 				<div class="container">
 					<div class="cta-inner section-inner">
-						<h3 class="section-title mt-0">Still not convinced?</h3>
-						<h3 class="section-title mt-0">How about you decide after you try our app?</h3>
+						<div class="cta-inner-content">
+              <h3 class="section-title mt-0">Still not convinced?</h3>
+						<p class="mt-0">How about you decide after you try our app?</p>
+            </div>
 						<div class="cta-cta">
-							<a class="button button-primary button-wide-mobile" href="{{ url_for('main.login_page') }}">Try Now</a>
+							<a class="universal-btn" href="{{ url_for('main.login_page') }}">Try Now</a>
 						</div>
 					</div>
 				</div>
 			</section>
 {% endblock %}
 {% block footer %}
-    <footer class="site-footer">
+    <footer class="site-footer main-footer">
       <div class="container">
         <div class="site-footer-inner">
           <div class="brand footer-brand">
 						<a href="/">
 							<img width="200px" height="200px" class="logo-landing" src="{{ url_for('static', filename='img/SVO_icon2.png') }}" alt="Logo">
 						</a>
-            <h3 class="text-secondary"> Contact Us : contact@smartdevweb.com </h3>
+          </div>
+          <div class="footer-menu">
+            <h3>Quik Links</h3>
+            <ul class="footer-links">
+              <li>
+                <a href="/">Home</a>
+              </li>
+              <li>
+                <a href="/dashboard">Dashboard</a>
+              </li>
+              <li>
+                <a href="/blog">Blog</a>
+              </li>
+              <li>
+                <a href="/contact_page">Contact</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-info">
+            <h3>Contact Us</h3>
+            <a href="mailto:contact@smartdevweb.com">contact@smartdevweb.com</a>
           </div>
           <!--
           <ul class="footer-social-links list-reset">
@@ -215,10 +238,13 @@
           -->
         </div>
         <div class="copyright text-center">
-          Copyright &copy; 2023 - All Rights Reserved
-          <br>
-          <a href="{{ url_for('main.terms_of_service') }}">Terms of Service</a> |
+          <div class="copyright-text">
+          <strong>Copyright &copy; 2023 - All Rights Reserved</strong>
+          </div>
+          <div class="copyright-links">
+            <a href="{{ url_for('main.terms_of_service') }}">Terms of Service</a> |
           <a href="{{ url_for('main.privacy_policy') }}">Privacy Policy</a>
+          </div>
       </div>
       </div>
     </footer>

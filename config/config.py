@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 ROOT = '/home/tnhlabsc/svboost.com'
 if not os.path.isdir(ROOT):
-    ROOT = '/mnt/c/Users/admin/Documents/Github/svboost.com'
+    ROOT = 'C:\\Users\\thesm\\Desktop\\all apps\\svboost.com'
 
 
 os.environ['OPENBLAS_NUM_THREADS'] = '1'
