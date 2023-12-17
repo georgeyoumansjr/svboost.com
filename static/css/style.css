@@ -701,6 +701,59 @@ span.price {
   font-weight: 600;
   margin-bottom: 20px;
 }
+#dashboard-sidebar{
+  background: white;
+  padding: 25px !important;
+  border-radius: 25px;
+  margin-left: 20px;
+  width: 350px;
+  margin-bottom: 30px;
+}
+#dashboard-sidebar a, #dashboard-sidebar h5, #dashboard-sidebar h3{
+  color: #aa0e23 !important;
+}
+#dashboard-sidebar a{
+  font-weight: 400 !important;
+  font-size: 18px !important;
+  text-transform: capitalize !important;
+  text-align: start !important;
+}
+#dashboard-sidebar h5, #dashboard-sidebar h3{
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  margin-top: 10px;
+}
+#dashboard-content{
+  width: calc(100% - 40px - 350px);
+  margin-right: 20px;
+  margin-bottom: 30px;
+}
+#dashboard-sidebar, #dashboard-content{
+  height: calc(100vh - 50px);
+  overflow-y: auto;
+  position: relative;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #aa0e23;
+}
 @media screen and (max-width: 1024px){
   .inner-blog .hero-title{
     font-size: 35px;

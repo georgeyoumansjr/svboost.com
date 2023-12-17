@@ -3,9 +3,9 @@
 {% block content %}
     <div id="search_page_content">
         <div class="row">
-            <div class="col-xl col-lg col-md">
+            <div id="dashboard-sidebar">
                 <nav class="nav flex-column side-nav mb-5">
-                    <button class="btn btn-info mb-3 show-modal-button" data-toggle="modal" data-target="#tutorialModal">TUTORIAL</button>
+                    <button class="btn btn-info mb-3 universal-btn show-modal-button" data-toggle="modal" data-target="#tutorialModal">TUTORIAL</button>
                     <h5>Search Top / Most Competitive:</h5>
                     <a class="btn btn-light" href="{{ url_for('main.search_by_keyword_in_description') }}">KEYWORDS</a>
                     <a class="btn btn-light" href="{{ url_for('main.search_by_keyword_in_tag') }}">TAGS</a>
@@ -14,7 +14,7 @@
                     <a class="btn btn-light" href="{{ url_for('main.description_builder') }}">AI DESCRIPTIONS</a>
                 </nav>
             </div>
-            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
+            <div id="dashboard-content">
                 {% block content_search_page %}
                 {% endblock %}
             </div>
