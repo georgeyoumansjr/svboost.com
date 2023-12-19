@@ -11,7 +11,7 @@ from flask_login import (
 from db.db import db
 from db.user import User
 import openai
-from pytube import Search
+from pytubefix import Search
 
 blueprint = Blueprint('report', __name__,
                         template_folder='../',

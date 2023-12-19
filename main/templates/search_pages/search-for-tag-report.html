@@ -2,7 +2,7 @@
 
 {% block content_search_page %}
 
-    <main class="border1">
+    <main class="border1 main">
 
         <h1 class="step2">TAG SEARCH</h1>
         <p>This feature searches for top trending tags related to your keyword.</p>
@@ -12,9 +12,11 @@
                     <div class="form-group">
                         <label style="width:250px; display:block; margin-left: auto;margin-right: auto;" for="keyword">Search term:</label>
                         <input style="width:250px; display:block; margin-left: auto;margin-right: auto;" type="text" class="step1 form-control" id="keyword" name="keyword">
-                        <button style="width:100px; display:block; margin-left: auto;margin-right: auto;" type="button" class="form-control" value="tag" id="search">
-                          Search
-                        </button>
+                        <div class="text-center">
+                            <button style="width:100px; display:block; margin-left: auto;margin-right: auto;" type="button" class="form-control universal-btn" value="tag" id="search">
+                                Search
+                              </button>
+                        </div>
                         <input type="hidden" id="ft" value="tag"/>
                     </div>
                 </div>

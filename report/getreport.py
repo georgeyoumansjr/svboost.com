@@ -1,7 +1,7 @@
 from collections import Counter
 import re
 import pandas as pd
-from pytube import Search
+from pytubefix import Search
 
 def frequency_by_video_tags(videos)->list:
     tags = get_tag_list_by_each_video(videos)

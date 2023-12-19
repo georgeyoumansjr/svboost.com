@@ -2,7 +2,7 @@
 
 {% block content_search_page %}
 
-<main class="border1">
+<main class="border1 main">
         <h1 class="step2">KEYWORD SEARCH</h1>
         <p>This feature searches for top trending keywords from the description section related to your search terms.</p>
         <section class="search">
@@ -10,9 +10,11 @@
                 <div class="form-group">
                     <label style="width:250px; display:block; margin-left: auto;margin-right: auto;" for="keyword">Search term:</label>
                     <input style="width:250px; display:block; margin-left: auto;margin-right: auto;" type="text" class="step1 form-control" id="keyword" name="keyword">
-                    <button style="width:100px; display:block; margin-left: auto;margin-right: auto;" type="button" class="form-control" value="desc" id="search">
-                      Search
-                    </button>
+                    <div class="text-center">
+                        <button style="width:100px; display:block; margin-left: auto;margin-right: auto;" type="button" class="form-control universal-btn" value="desc" id="search">
+                            Search
+                          </button>
+                    </div>
                     <input type="hidden" id="ft" value="desc"/>
                 </div>
             </form>
@@ -22,7 +24,7 @@
               <img id="img-spinner" src="{{ url_for('static', filename='img/spinner.gif')}}" alt="Loading..."/><br>
               <i id="wait_time">Please note that this may take a while as the algorithm runs through all descriptions across YouTube.</i><br><br><br>
               </center>
-            </div>
+        </div>
         <section hidden class="result">
 
         </section>
