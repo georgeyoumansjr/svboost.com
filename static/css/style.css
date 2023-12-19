@@ -115,6 +115,13 @@ textarea {
   min-height:calc(100vh - 200px);
   min-width: 300px;
 }
+.border1.main{
+  margin-left: 20px;
+}
+.border1.main > h1{
+  font-weight: 700;
+  font-size: 35px;
+}
 
 .border1 a {
 	font-size: 18px;
@@ -617,6 +624,10 @@ span.price {
 }
 .google.google-btn:hover{
   color: #363435 !important;
+  text-decoration: none;
+  box-shadow: 0px 5px 20px -10px rgba(255, 255, 255, 0.55);
+    -webkit-box-shadow: 0px 5px 20px -10px rgba(255, 255, 255, 0.55);
+    -moz-box-shadow: 0px 5px 20px -10px rgba(255, 255, 255, 0.55);
 }
 .ForgetPwd{
   color: #aa0e23 !important;
@@ -737,22 +748,27 @@ span.price {
 ::-webkit-scrollbar {
   width: 10px;
 }
-
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 5px;
 }
-
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 5px;
 }
-
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #aa0e23;
+}
+.modal-header .close{
+  color: #aa0e23;
+  font-size: 30px;
+}
+.modal .features h4 {
+  font-weight: 700;
+  font-size: 22px;
 }
 @media screen and (max-width: 1024px){
   .inner-blog .hero-title{
