@@ -787,6 +787,30 @@ span.price {
     padding: 0.25rem 0.50rem;
     font-size: 1rem;
   }
+  #dashboard-sidebar , #dashboard-content{
+    width: calc(100% - 20px) !important;
+    height: auto !important;
+    margin: 10px auto;
+  }
+  #dashboard-content{
+    margin: 0 auto;
+  }
+  .border1.main{
+    margin-left: 0px;
+  }
+  .navbar{
+    margin: 10px;
+  }
+  #dashboard-content .feature-inner *{
+    font-size: 16px;
+  }
+  #dashboard-content .feature-title{
+    font-size: 20px !important;
+    font-weight: 600;
+  }
+  .modal .features #video{
+    width: 100% !important;
+  }
 }
 @media screen and (max-width: 575px){
   .inner-blog .hero-title{

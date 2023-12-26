@@ -2,7 +2,8 @@
 
 {% block content %}
     <div id="search_page_content">
-        <div class="row">
+        <div class="container-fluid">
+          <div class="row">
             <div id="dashboard-sidebar">
                 <nav class="nav flex-column side-nav mb-5">
                     <button class="btn btn-info mb-3 universal-btn show-modal-button" data-toggle="modal" data-target="#tutorialModal">TUTORIAL</button>
@@ -18,6 +19,7 @@
                 {% block content_search_page %}
                 {% endblock %}
             </div>
+        </div>
         </div>
     </div>
     <div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="t
