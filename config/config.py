@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 ROOT = '/home/tnhlabsc/svboost.com'
 if not os.path.isdir(ROOT):
     ROOT = 'C:\\Users\\12014\\Desktop\\all apps\\svboost.com'
+    ROOT = 'C:\\Users\\thesm\\Desktop\\all apps\\svboost.com'
     # ROOT = 'C:\Users\12014\Desktop\all apps\svboost.com'
 
 
